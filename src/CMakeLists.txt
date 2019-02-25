@@ -5,7 +5,7 @@ set(QJsonChannel_SRC
     qjsonrpcserviceprovider.cpp
 )
 
-add_definitions(-QJSONRPC_BUILD)
+add_definitions(-DQJSONRPC_BUILD)
 if(NOT MSVC)
     add_definitions(
 #        -Wall
@@ -28,10 +28,6 @@ set_target_properties(
     AUTOMOC ON
     INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/${libdir}"
 )
-
-target_include_directories("${QJSONCHANNEL_LIBRARY}"
-  PRIVATE
-  "${CMAKE_CURRENT_SOURCE_DIR}/../3rd/boost.http/include" ${Boost_INCLUDE_DIR})
 
 # CXX_STANDARD was introduced in CMake 3.1
 if("${CMAKE_VERSION}" VERSION_GREATER "3.0")
