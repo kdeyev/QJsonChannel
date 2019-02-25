@@ -45,38 +45,31 @@ elseif(APPLE)
 endif()
 
 # Build info
-set(QJSONCHANNEL_LIBRARY "QJsonChannel${QJSONCHANNEL_VERSION_MAJOR}")
+set(QJSONCHANNEL_LIBRARY "QJsonChannel")
 
 # Install info
-set(includedir include/QJsonChannel-${QJSONCHANNEL_VERSION_MAJOR})
+set(includedir include)
 set(libdir "lib${LIB_SUFFIX}")
 
 # Targets
 add_subdirectory(src)
-
-# uninstall target
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-    IMMEDIATE @ONLY)
-
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+add_subdirectory(tufao)
+add_subdirectory(examples/hello-cmake)
 
 # cmake-modules
-set(QJSONCHANNEL_CONFIG_INSTALL_DIR "${libdir}/cmake/QJsonChannel${QJSONCHANNEL_VERSION_MAJOR}")
+set(QJSONCHANNEL_CONFIG_INSTALL_DIR "${libdir}/cmake")
 include(CMakePackageConfigHelpers)
 configure_package_config_file(
   QJsonChannelConfig.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/QJsonChannel${QJSONCHANNEL_VERSION_MAJOR}Config.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/QJsonChannelConfig.cmake"
   INSTALL_DESTINATION ${QJSONCHANNEL_CONFIG_INSTALL_DIR}
   PATH_VARS libdir
             includedir)
 
-write_basic_config_version_file(QJsonChannel${QJSONCHANNEL_VERSION_MAJOR}ConfigVersion.cmake VERSION ${QJSONCHANNEL_VERSION} COMPATIBILITY ExactVersion)
+write_basic_config_version_file(QJsonChannelConfigVersion.cmake VERSION ${QJSONCHANNEL_VERSION} COMPATIBILITY ExactVersion)
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/QJsonChannel${QJSONCHANNEL_VERSION_MAJOR}Config.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/QJsonChannel${QJSONCHANNEL_VERSION_MAJOR}ConfigVersion.cmake
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/QJsonChannelConfig.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/QJsonChannelConfigVersion.cmake
         DESTINATION ${QJSONCHANNEL_CONFIG_INSTALL_DIR})
 
-install(EXPORT "${QJSONCHANNEL_LIBRARY}-export" DESTINATION ${QJSONCHANNEL_CONFIG_INSTALL_DIR} FILE QJsonChannel${QJSONCHANNEL_VERSION_MAJOR}Targets.cmake)
+install(EXPORT "${QJSONCHANNEL_LIBRARY}-export" DESTINATION ${QJSONCHANNEL_CONFIG_INSTALL_DIR} FILE QJsonChannelTargets.cmake)
