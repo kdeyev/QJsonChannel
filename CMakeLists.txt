@@ -1,75 +1,27 @@
-# Project QJsonChannel
-project(QJsonChannel)
+cmake_minimum_required(VERSION 3.0)
 
-# Metadata
-set(QJSONCHANNEL_VERSION_MAJOR 1)
-set(QJSONCHANNEL_VERSION_MINOR 0)
-set(QJSONCHANNEL_VERSION_PATCH 0)
-set(QJSONCHANNEL_VERSION ${QJSONCHANNEL_VERSION_MAJOR}.${QJSONCHANNEL_VERSION_MINOR}.${QJSONCHANNEL_VERSION_PATCH})
-set(QJSONCHANNEL_BRIEF "JSON-RPC Server side binding using Qt MOC")
+project(QJsonChannel VERSION 1.0)
 
-# Dependencies
-cmake_minimum_required(VERSION 2.8.11)
+set(SOURCE_FILES
+    src/qjsonrpcmessage.cpp
+    src/qjsonrpcservice.cpp
+    src/qjsonrpcserviceprovider.cpp
+)
+
+add_definitions(-DTUFAO_LIBRARY)
+if(NOT MSVC)
+    add_definitions(
+        -Wall
+        -Wextra
+#        -Wpedantic
+#        -Weffc++
+    )
+endif()
+
 find_package(Qt5Core REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Boost 1.55 REQUIRED)
 
-# CMake since 3.1 has ability to use particular C/C++ standarts.
-# For versions before 3.1 use FindCXX11 module as fallback.
-if("${CMAKE_VERSION}" VERSION_LESS "3.1")
-    set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
-    find_package(CXX11 REQUIRED)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX11_FLAGS}")
-endif()
+set(CMAKE_AUTOMOC ON) # For meta object compiler
 
-get_target_property(QMAKE_EXECUTABLE Qt5::qmake LOCATION)
-function(QUERY_QMAKE VAR RESULT)
-    exec_program("${QMAKE_EXECUTABLE}" ARGS "-query ${VAR}" RETURN_VALUE return_code OUTPUT_VARIABLE output)
-    if(NOT return_code)
-        file(TO_CMAKE_PATH "${output}" output)
-        set(${RESULT} ${output} PARENT_SCOPE)
-    endif(NOT return_code)
-endfunction(QUERY_QMAKE)
+add_library("${PROJECT_NAME}" SHARED ${SOURCE_FILES} ${META_FILES_TO_INCLUDE})
 
-query_qmake(QT_INSTALL_PLUGINS QT_PLUGINS_DIR)
-query_qmake(QT_HOST_DATA QT_DATA_DIR)
-
-set(QT_MKSPECS_DIR ${QT_DATA_DIR}/mkspecs)
-
-# Debug version of library should have 'd' postfix on Windows
-# and '_debug' on Mac OS X
-if(WIN32)
-    set(CMAKE_DEBUG_POSTFIX "d")
-elseif(APPLE)
-    set(CMAKE_DEBUG_POSTFIX "_debug")
-endif()
-
-# Build info
-set(QJSONCHANNEL_LIBRARY "QJsonChannel")
-
-# Install info
-set(includedir include)
-set(libdir "lib${LIB_SUFFIX}")
-
-# Targets
-add_subdirectory(src)
-add_subdirectory(tufao)
-add_subdirectory(examples/hello-cmake)
-
-# cmake-modules
-set(QJSONCHANNEL_CONFIG_INSTALL_DIR "${libdir}/cmake")
-include(CMakePackageConfigHelpers)
-configure_package_config_file(
-  QJsonChannelConfig.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/QJsonChannelConfig.cmake"
-  INSTALL_DESTINATION ${QJSONCHANNEL_CONFIG_INSTALL_DIR}
-  PATH_VARS libdir
-            includedir)
-
-write_basic_config_version_file(QJsonChannelConfigVersion.cmake VERSION ${QJSONCHANNEL_VERSION} COMPATIBILITY ExactVersion)
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/QJsonChannelConfig.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/QJsonChannelConfigVersion.cmake
-        DESTINATION ${QJSONCHANNEL_CONFIG_INSTALL_DIR})
-
-install(EXPORT "${QJSONCHANNEL_LIBRARY}-export" DESTINATION ${QJSONCHANNEL_CONFIG_INSTALL_DIR} FILE QJsonChannelTargets.cmake)
+qt5_use_modules(${PROJECT_NAME} Core)
