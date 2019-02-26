@@ -29,4 +29,4 @@ install(
 )
 
 add_subdirectory(tufao)
-add_subdirectory(examples/hello-cmake)
+add_subdirectory(examples/test-http-server)
