@@ -39,7 +39,6 @@ Q_DECLARE_METATYPE(QJsonRpc::ErrorCode)
 
 #define qJsonRpcDebug if (qgetenv("QJSONRPC_DEBUG").isEmpty()); else qDebug
 
-#ifdef QJSONRPC_SHARED
 #   ifdef QJSONRPC_BUILD
 #       define QJSONRPC_EXPORT Q_DECL_EXPORT
 #   else
@@ -47,6 +46,5 @@ Q_DECLARE_METATYPE(QJsonRpc::ErrorCode)
 #   endif
 #else
 #   define QJSONRPC_EXPORT
-#endif
 
 #endif
