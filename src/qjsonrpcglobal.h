@@ -44,7 +44,5 @@ Q_DECLARE_METATYPE(QJsonRpc::ErrorCode)
 #   else
 #       define QJSONRPC_EXPORT Q_DECL_IMPORT
 #   endif
-#else
-#   define QJSONRPC_EXPORT
 
 #endif

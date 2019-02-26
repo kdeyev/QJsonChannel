@@ -20,12 +20,15 @@
   SOFTWARE.
 */
 
+#include <iostream>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QUrl>
 
 #include <Tufao/HttpServer>
 #include <Tufao/HttpServerRequest>
 #include <Tufao/Headers>
+#include <QJsonChannel/qjsonrpcserviceprovider.h>
+#include <testservice.h>
 
 using namespace Tufao;
 
@@ -34,14 +37,20 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     HttpServer server;
 
+	QJsonRpcServiceProvider sp;
+	sp.addService(new QJsonRpcService("agent", new TestService));
+
     QObject::connect(&server, &HttpServer::requestReady,
                      [](HttpServerRequest &req, HttpServerResponse &res) {
+		std::cout << QString (req.readBody()).toStdString();
                          res.writeHead(Tufao::HttpResponseStatus::OK);
-                         res.headers().replace("Content-Type", "text/plain");
+                         res.headers().replace("Content-Type", "application/json");
+						 res.headers().insert("Access-Control-Allow-Origin", "*/*");
+						
                          res.end("Hello " + req.url().path().toUtf8());
                      });
 
-    server.listen(QHostAddress::Any, 8080);
+    server.listen(QHostAddress::Any, 5555);
 
     return a.exec();
 }

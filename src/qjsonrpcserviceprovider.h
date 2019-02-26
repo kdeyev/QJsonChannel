@@ -26,13 +26,14 @@ class QJsonRpcServiceProviderPrivate;
 class QJSONRPC_EXPORT QJsonRpcServiceProvider
 {
 public:
-    ~QJsonRpcServiceProvider();
+	QJsonRpcServiceProvider();
+	~QJsonRpcServiceProvider();
     virtual bool addService(QJsonRpcService *service);
     virtual bool removeService(QJsonRpcService *service);
 
 	QJsonRpcMessage processMessage(const QJsonRpcMessage &message);
 protected:
-    QJsonRpcServiceProvider();
+
 
 private:
     QScopedPointer<QJsonRpcServiceProviderPrivate> d;
