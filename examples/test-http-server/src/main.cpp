@@ -41,20 +41,35 @@ int main(int argc, char *argv[])
 	sp.addService(new QJsonRpcService("agent", new TestService));
 
     QObject::connect(&server, &HttpServer::requestReady,
-                     [](HttpServerRequest &req, HttpServerResponse &res) {
-		std::cout << QString (req.readBody()).toStdString();
-                         res.writeHead(Tufao::HttpResponseStatus::OK);
-                         res.headers().replace("Content-Type", "application/json");
+                     [&](HttpServerRequest &req, HttpServerResponse &res) {
+							
+							if (req.method() == "POST") {
+								QByteArray data = req.readBody();
+								res.writeHead(Tufao::HttpResponseStatus::OK);
+								res.headers().replace("Content-Type", "application/json");
 
-						 res.headers().insert("Access-Control-Allow-Origin", "*");
-						 res.headers().insert("Access-Control-Allow-Methods", "POST, GET");
-						 res.headers().insert("Access-Control-Allow-Headers", "accept, content-type");
+								res.headers().insert("Access-Control-Allow-Origin", "*");
+								res.headers().insert("Access-Control-Allow-Methods", "POST");
+								res.headers().insert("Access-Control-Allow-Headers", "accept, content-type");
 
-						 //res.headers().insert("Access-Control-Allow-Origin", "localhost:5555");
-						 //res.headers().insert("Access-Control-Allow-Credentials", "true");
-						
-                         res.end("Hello " + req.url().path().toUtf8());
-                     });
+								QJsonRpcMessage request = QJsonRpcMessage::fromJson(data);
+								QJsonRpcMessage response = sp.processMessage(request);
+								data = response.toJson();
+								res.end(data);
+							}
+							else if (req.method() == "OPTIONS") {
+								res.writeHead(Tufao::HttpResponseStatus::OK);
+
+								res.headers().insert("Access-Control-Allow-Origin", "*");
+								res.headers().insert("Access-Control-Allow-Methods", "POST");
+								res.headers().insert("Access-Control-Allow-Headers", "accept, content-type");
+
+								res.headers().insert("Allow", "POST");
+								res.end();
+							} else {
+								std::cout << req.method().toStdString();
+							}
+						});
 
     server.listen(QHostAddress::Any, 5555);
 

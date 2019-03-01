@@ -41,7 +41,7 @@
             document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParams result: ' + result + '<br>';
         });
 
-        jrpc.call('agent.testMethodWithParamsAndReturnValue', "kostya").then(function (result) {
+        jrpc.call('agent.testMethodWithParamsAndReturnValue', ["kostya"]).then(function (result) {
             document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
         });
 
