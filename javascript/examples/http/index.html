@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Rpc example</title>
+    <script type="application/javascript" src="../../qjsonrpc-webchannel/simple-jsonrpc-js/simple-jsonrpc-js.js"></script>
+</head>
+
+<body>
+<h1 class="title"></h1>
+<p class="paragraph"></p>
+<script>
+        //configure
+        var jrpc = new simple_jsonrpc();
+
+        jrpc.toStream = function(_msg){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState != 4) return;
+
+                try {
+                    JSON.parse(this.responseText);
+                    jrpc.messageHandler(this.responseText);
+                }
+                catch (e){
+                    console.error(e);
+                }
+            };
+
+            xhr.open("POST", 'http://localhost:5555', true);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.send(_msg);
+        };
+
+        //calls
+        jrpc.call("agent.testMethod").then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethod result: ' + result + '<br>';
+        });
+
+        jrpc.call('agent.testMethodWithParams', ["one", false, 10]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParams result: ' + result + '<br>';
+        });
+
+        jrpc.call('agent.testMethodWithParamsAndReturnValue', "kostya").then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
+        });
+
+</script>
+</body>
+
+</html>
