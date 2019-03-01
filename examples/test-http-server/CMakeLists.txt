@@ -19,5 +19,5 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
 qt5_use_modules(${PROJECT_NAME} Core)
 qt5_use_modules(${PROJECT_NAME} Network)
 
-target_link_libraries(${PROJECT_NAME} QJsonChannel tufao1)
+target_link_libraries(${PROJECT_NAME} QJsonChannelTufaoHttp QJsonChannel tufao1)
 

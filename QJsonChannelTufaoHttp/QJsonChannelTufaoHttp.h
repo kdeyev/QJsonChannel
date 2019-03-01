@@ -2,16 +2,13 @@
 
 #include <Tufao/HttpServer>
 #include <QJsonChannel/qjsonrpcserviceprovider.h>
-#include "qjsonchtufaohttp_export.h"
+#include "qjsonchanneltufaohttp_export.h"
 
-class QJSONCHTUFAOHTTP_EXPORT QJsonChannelTufaoHttp
+class QJSONCHANNELTUFAOHTTP_EXPORT QJsonChannelTufaoHttp
 {
 public:
 	QJsonChannelTufaoHttp();
 
-	HttpServer _httpServer;
-	qjsonrpcserviceprovider _serviceRepository;
+	Tufao::HttpServer _httpServer;
+	QJsonRpcServiceProvider _serviceRepository;
 };
-
-#endif
-

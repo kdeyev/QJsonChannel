@@ -1,8 +1,16 @@
-#include <QJsonChTufao/QJsonChannelTufaoHttp.h>
+#include "QJsonChannelTufaoHttp.h"
+
+#include <Tufao/HttpServer>
+#include <Tufao/HttpServerRequest>
+#include <Tufao/Headers>
+
+#include "QJsonChannel/qjsonrpcmessage.h"
+
+using namespace Tufao;
 
 QJsonChannelTufaoHttp::QJsonChannelTufaoHttp() {
-	QObject::connect(&_httpServer, &HttpServer::requestReady,
-		[&](HttpServerRequest &req, HttpServerResponse &res) {
+	QObject::connect(&_httpServer, &Tufao::HttpServer::requestReady,
+		[&](Tufao::HttpServerRequest &req, Tufao::HttpServerResponse &res) {
 
 		if (req.method() == "POST") {
 			QByteArray data = req.readBody();
@@ -29,7 +37,8 @@ QJsonChannelTufaoHttp::QJsonChannelTufaoHttp() {
 			res.end();
 		}
 		else {
-			std::cout << req.method().toStdString();
+			res.writeHead(Tufao::HttpResponseStatus::I_AM_A_TEAPOT);
+			//std::cout << req.method().toStdString();
 		}
 	});
 }
