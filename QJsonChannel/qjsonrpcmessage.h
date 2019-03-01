@@ -33,7 +33,7 @@
 #include "qjsonrpcglobal.h"
 
 class QJsonRpcMessagePrivate;
-class QJSONRPC_EXPORT QJsonRpcMessage
+class QJSONCHANNEL_EXPORT QJsonRpcMessage
 {
 public:
     QJsonRpcMessage();
@@ -109,7 +109,7 @@ public:
 #endif
 };
 
-QJSONRPC_EXPORT QDebug operator<<(QDebug, const QJsonRpcMessage &);
+QJSONCHANNEL_EXPORT QDebug operator<<(QDebug, const QJsonRpcMessage &);
 Q_DECLARE_METATYPE(QJsonRpcMessage)
 
 #if QT_VERSION < 0x050000

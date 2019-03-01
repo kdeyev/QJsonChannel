@@ -23,7 +23,7 @@
 #include "qjsonrpcmessage.h"
 
 //class QJsonRpcServiceRequestPrivate;
-//class QJSONRPC_EXPORT QJsonRpcServiceRequest
+//class QJSONCHANNEL_EXPORT QJsonRpcServiceRequest
 //{
 //public:
 //    QJsonRpcServiceRequest();
@@ -45,7 +45,7 @@
 
 class QJsonRpcServiceProvider;
 class QJsonRpcServicePrivate;
-class QJSONRPC_EXPORT QJsonRpcService : public QObject
+class QJSONCHANNEL_EXPORT QJsonRpcService : public QObject
 {
     Q_OBJECT
 public:

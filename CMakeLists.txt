@@ -6,7 +6,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY .)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY .)
 
 
-add_subdirectory(src)
+add_subdirectory(QJsonChannel)
 add_subdirectory(tufao)
 add_subdirectory(QJsonChannelTufaoHttp)
 add_subdirectory(examples/test-http-server)

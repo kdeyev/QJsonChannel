@@ -19,6 +19,7 @@
 
 #include <QtGlobal>
 #include <QMetaType>
+#include "qjsonchannel_export.h"
 
 // error codes defined by spec
 namespace QJsonRpc {
@@ -39,10 +40,5 @@ Q_DECLARE_METATYPE(QJsonRpc::ErrorCode)
 
 #define qJsonRpcDebug if (qgetenv("QJSONRPC_DEBUG").isEmpty()); else qDebug
 
-#   ifdef QJSONRPC_BUILD
-#       define QJSONRPC_EXPORT Q_DECL_EXPORT
-#   else
-#       define QJSONRPC_EXPORT Q_DECL_IMPORT
-#   endif
 
 #endif

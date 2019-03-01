@@ -23,7 +23,7 @@ class QJsonRpcMessage;
 class QJsonRpcService;
 class QJsonRpcAbstractSocket;
 class QJsonRpcServiceProviderPrivate;
-class QJSONRPC_EXPORT QJsonRpcServiceProvider
+class QJSONCHANNEL_EXPORT QJsonRpcServiceProvider
 {
 public:
 	QJsonRpcServiceProvider();

@@ -25,6 +25,7 @@ qt5_use_modules(${PROJECT_NAME} Network)
 target_link_libraries(${PROJECT_NAME} QJsonChannel tufao1)
 
 install(FILES ${INCLUDE_FILES} DESTINATION "include/${PROJECT_NAME}")
+install(FILES qjsonchanneltufaohttp_export.h DESTINATION "include/${PROJECT_NAME}")
 install(
     TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION lib
