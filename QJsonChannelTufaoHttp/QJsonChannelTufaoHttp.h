@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Tufao/HttpServer>
-#include <QJsonChannel/qjsonrpcserviceprovider.h>
+#include <QJsonChannel/QJsonChannelServiceProvider.h>
 #include "qjsonchanneltufaohttp_export.h"
 
 class QJSONCHANNELTUFAOHTTP_EXPORT QJsonChannelTufaoHttp

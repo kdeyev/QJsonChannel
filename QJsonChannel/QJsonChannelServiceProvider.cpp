@@ -3,9 +3,9 @@
 #include <QMetaClassInfo>
 #include <QDebug>
 
-#include "qjsonrpcservice.h"
-#include "qjsonrpcservice_p.h"
-#include "qjsonrpcserviceprovider.h"
+#include "QJsonChannelService.h"
+#include "QJsonChannelService_p.h"
+#include "QJsonChannelServiceProvider.h"
 
 class QJsonRpcServiceProviderPrivate
 {

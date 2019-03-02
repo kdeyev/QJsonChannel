@@ -20,17 +20,11 @@
 #include <QSharedDataPointer>
 #include <QMetaType>
 
-#if QT_VERSION >= 0x050000
 #include <QJsonValue>
 #include <QJsonObject>
 #include <QJsonArray>
-#else
-#include "json/qjsonvalue.h"
-#include "json/qjsonobject.h"
-#include "json/qjsonarray.h"
-#endif
 
-#include "qjsonrpcglobal.h"
+#include "QJsonChannelGlobal.h"
 
 class QJsonRpcMessagePrivate;
 class QJSONCHANNEL_EXPORT QJsonRpcMessage
@@ -41,9 +35,7 @@ public:
     QJsonRpcMessage &operator=(const QJsonRpcMessage &other);
     ~QJsonRpcMessage();
 
-#if QT_VERSION >= 0x050000
     inline void swap(QJsonRpcMessage &other) { qSwap(d, other.d); }
-#endif
 
     enum Type {
         Invalid,
@@ -98,23 +90,10 @@ public:
 private:
     friend class QJsonRpcMessagePrivate;
     QSharedDataPointer<QJsonRpcMessagePrivate> d;
-
-#if QT_VERSION < 0x050000
-public:
-    typedef QSharedDataPointer<QJsonRpcMessagePrivate> DataPtr;
-    inline DataPtr &data_ptr() { return d; }
-
-    // internal
-    bool isDetached() const;
-#endif
 };
 
 QJSONCHANNEL_EXPORT QDebug operator<<(QDebug, const QJsonRpcMessage &);
 Q_DECLARE_METATYPE(QJsonRpcMessage)
-
-#if QT_VERSION < 0x050000
-Q_DECLARE_TYPEINFO(QJsonRpcMessage, Q_MOVABLE_TYPE);
-#endif
 Q_DECLARE_SHARED(QJsonRpcMessage)
 
 #endif

@@ -17,7 +17,7 @@
 #ifndef TESTSERVICE_H
 #define TESTSERVICE_H
 
-#include "qjsonrpcservice.h"
+#include "QJsonChannelService.h"
 
 class TestService : public QObject
 {

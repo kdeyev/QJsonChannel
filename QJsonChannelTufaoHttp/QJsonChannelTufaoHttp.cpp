@@ -4,7 +4,7 @@
 #include <Tufao/HttpServerRequest>
 #include <Tufao/Headers>
 
-#include "QJsonChannel/qjsonrpcmessage.h"
+#include "QJsonChannel/QJsonChannelMessage.h"
 
 using namespace Tufao;
 

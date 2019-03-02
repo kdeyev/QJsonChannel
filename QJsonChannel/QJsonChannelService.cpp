@@ -20,8 +20,8 @@
 #include <QEventLoop>
 #include <QDebug>
 
-#include "qjsonrpcservice_p.h"
-#include "qjsonrpcservice.h"
+#include "QJsonChannelService_p.h"
+#include "QJsonChannelService.h"
 //
 //QJsonRpcServiceRequest::QJsonRpcServiceRequest()
 //    : d(new QJsonRpcServiceRequestPrivate)
@@ -111,7 +111,6 @@ QJsonRpcServicePrivate::MethodInfo::MethodInfo(const QMetaMethod &method)
 {
 	name = method.name();
 
-#if QT_VERSION >= 0x050000
     returnType = method.returnType();
     if (returnType == QMetaType::UnknownType) {
         qJsonRpcDebug() << "QJsonRpcService: can't bind method's return type"
@@ -121,10 +120,6 @@ QJsonRpcServicePrivate::MethodInfo::MethodInfo(const QMetaMethod &method)
     }
 
     parameters.reserve(method.parameterCount());
-#else
-    returnType = QMetaType::type(method.typeName());
-    parameters.reserve(method.parameterNames().count());
-#endif
 
     const QList<QByteArray> &types = method.parameterTypes();
     const QList<QByteArray> &names = method.parameterNames();
@@ -368,13 +363,8 @@ void QJsonRpcServicePrivate::cacheInvokableInfo()
              method.access() == QMetaMethod::Public) ||
              method.methodType() == QMetaMethod::Signal) {
 
-#if QT_VERSION >= 0x050000
             QByteArray signature = method.methodSignature();
             QByteArray methodName = method.name();
-#else
-            QByteArray signature = method.signature();
-            QByteArray methodName = signature.left(signature.indexOf('('));
-#endif
 
             MethodInfo info(method);
             if (!info.valid)
@@ -431,13 +421,8 @@ static inline QVariant convertArgument(const QJsonValue &argument,
                                        const QJsonRpcServicePrivate::ParameterInfo &info)
 {
     if (argument.isUndefined())
-#if QT_VERSION >= 0x050000
         return QVariant(info.type, Q_NULLPTR);
-#else
-        return QVariant(info.type, (const void *) NULL);
-#endif
 
-#if QT_VERSION >= 0x050200
     if (info.type == QMetaType::QJsonValue || info.type == QMetaType::QVariant ||
         info.type >= QMetaType::User) {
 
@@ -466,26 +451,10 @@ static inline QVariant convertArgument(const QJsonValue &argument,
     }
 
     return QVariant();
-#else
-    QVariant result = argument.toVariant();
-    QVariant::Type variantType = static_cast<QVariant::Type>(info.type);
-    if (info.type != QMetaType::QVariant && variantType != result.type() &&
-        !result.canConvert(variantType))
-        return QVariant();
-
-    if (!result.canConvert(variantType)) {
-        // toVariant succeeded, no need to convert
-        return result;
-    }
-
-    result.convert(variantType);
-    return result;
-#endif
 }
 
 QJsonValue QJsonRpcServicePrivate::convertReturnValue(QVariant &returnValue)
 {
-#if QT_VERSION >= 0x050200
     if (static_cast<int>(returnValue.type()) == qMetaTypeId<QJsonObject>())
         return QJsonValue(returnValue.toJsonObject());
     else if (static_cast<int>(returnValue.type()) == qMetaTypeId<QJsonArray>())
@@ -510,10 +479,6 @@ QJsonValue QJsonRpcServicePrivate::convertReturnValue(QVariant &returnValue)
         else
             return QJsonValue();
     }
-#else
-    // custom conversions could not be registered before 5.2, so this is only an optimization
-    return QJsonValue::fromVariant(returnValue);
-#endif
 }
 
 static inline QByteArray methodName(const QJsonRpcMessage &request)
@@ -554,13 +519,8 @@ QJsonRpcMessage QJsonRpcService::dispatch(const QJsonRpcMessage &request)
             idx = methodIndex;
             arguments.reserve(info.parameters.size());
             returnType = static_cast<QMetaType::Type>(info.returnType);
-#if QT_VERSION >= 0x050000
             returnValue = (returnType == QMetaType::Void) ?
                 QVariant() : QVariant(returnType, Q_NULLPTR);
-#else
-            returnValue = (returnType == QMetaType::Void) ?
-                QVariant() : QVariant(returnType, (const void *) NULL);
-#endif
             if (returnType == QMetaType::QVariant)
                 parameters.append(&returnValue);
             else

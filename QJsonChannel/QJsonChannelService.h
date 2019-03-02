@@ -20,7 +20,7 @@
 #include <QVariant>
 #include <QPointer>
 
-#include "qjsonrpcmessage.h"
+#include "QJsonChannelMessage.h"
 
 //class QJsonRpcServiceRequestPrivate;
 //class QJSONCHANNEL_EXPORT QJsonRpcServiceRequest

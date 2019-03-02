@@ -17,13 +17,9 @@
 
 #include <QDebug>
 
-#if QT_VERSION >= 0x050000
-#   include <QJsonDocument>
-#else
-#   include "json/qjsondocument.h"
-#endif
+#include <QJsonDocument>
 
-#include "qjsonrpcmessage.h"
+#include "QJsonChannelMessage.h"
 
 class QJsonRpcMessagePrivate : public QSharedData
 {
@@ -301,11 +297,7 @@ int QJsonRpcMessage::id() const
     const QJsonValue &value = d->object->value(QLatin1String("id"));
     if (value.isString())
         return value.toString().toInt();
-#if QT_VERSION >= 0x050200
     return value.toInt();
-#else
-    return value.toDouble();
-#endif
 }
 
 QString QJsonRpcMessage::method() const
@@ -344,11 +336,7 @@ int QJsonRpcMessage::errorCode() const
     const QJsonValue &value = error.value(QLatin1String("code"));
     if (value.isString())
         return value.toString().toInt();
-#if QT_VERSION >= 0x050200
     return value.toInt();
-#else
-    return value.toDouble();
-#endif
 }
 
 QString QJsonRpcMessage::errorMessage() const
@@ -370,13 +358,6 @@ QJsonValue QJsonRpcMessage::errorData() const
         d->object->value(QLatin1String("error")).toObject();
     return error.value(QLatin1String("data"));
 }
-
-#if QT_VERSION < 0x050000
-bool QJsonRpcMessage::isDetached() const
-{
-    return d && d->ref == 1;
-}
-#endif
 
 static QDebug operator<<(QDebug dbg, QJsonRpcMessage::Type type)
 {

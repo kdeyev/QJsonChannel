@@ -17,7 +17,7 @@
 #ifndef QJSONRPCSERVICEPROVIDER_H
 #define QJSONRPCSERVICEPROVIDER_H
 
-#include "qjsonrpcglobal.h"
+#include "QJsonChannelGlobal.h"
 
 class QJsonRpcMessage;
 class QJsonRpcService;
