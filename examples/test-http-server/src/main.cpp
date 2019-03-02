@@ -24,7 +24,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QUrl>
 
-#include <QJsonChannelTufaoHttp/QJsonChannelTufaoHttp.h>
+#include <QJsonChannelTufaoHttp.h>
 #include <testservice.h>
 
 

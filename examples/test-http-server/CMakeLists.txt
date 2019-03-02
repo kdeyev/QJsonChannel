@@ -10,14 +10,18 @@ file(GLOB_RECURSE INCLUDE_FILES src/*.h)
 set(CMAKE_AUTOMOC ON) # For meta object compiler
 
 include_directories(src)
-include_directories(../../install/include)
-include_directories(../../install/include/QJsonChannel)
-include_directories(../../install/include/tufao-1)
+include_directories(../../QJsonChannel/install/include/QJsonChannel)
+include_directories(../../tufao/install/include/tufao-1/Tufao)
+include_directories(../../QJsonChannelTufaoHttp/install/include/QJsonChannelTufaoHttp)
+link_directories(../../QJsonChannel/install/lib)
+link_directories(../../tufao/install/lib)
+link_directories(../../QJsonChannelTufaoHttp/install/lib)
+
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
 
 qt5_use_modules(${PROJECT_NAME} Core)
 qt5_use_modules(${PROJECT_NAME} Network)
 
-target_link_libraries(${PROJECT_NAME} QJsonChannelTufaoHttp QJsonChannel tufao1)
+target_link_libraries(${PROJECT_NAME} QJsonChannelTufaoHttp QJsonChannel tufao1d)
 
