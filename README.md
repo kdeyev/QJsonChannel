@@ -39,15 +39,14 @@
         - python python/testqjsonrpc_http.py
         - python python/testqjsonrpc_requests.py
 
-
-* all qt web channel examples require to copy near your executable file:
+* for any qtWebChannel example need to require to place a list of resources near your executable file:
     - qt.conf
     - QtWebEngineProcess
-        - QtWebEngineProcessd.exe
-        - icudtl.dat from Qt/resources
-        - qtwebengine_devtools_resources.pak from Qt/resources
-        - qtwebengine_resources.pak from Qt/resources
-        - qtwebengine_resources_100p.pak from Qt/resources
-        - qtwebengine_resources_200p.pak from Qt/resources
-        - qtwebengine_locales from Qt/translations/qtwebengine_locales
-            -   many files from 
+        - QtWebEngineProcess executable         from Qt/bin
+        - icudtl.dat                            from Qt/resources
+        - qtwebengine_devtools_resources.pak    from Qt/resources
+        - qtwebengine_resources.pak             from Qt/resources
+        - qtwebengine_resources_100p.pak        from Qt/resources
+        - qtwebengine_resources_200p.pak        from Qt/resources
+        - qtwebengine_locales                   from Qt/translations/qtwebengine_locales
+            -   many files 

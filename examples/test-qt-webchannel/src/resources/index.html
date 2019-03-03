@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Rpc example</title>
-    <script type="text/javascript" src="qrc:///web-ui-main/resources/qwebchannel.js"></script>
+    <script type="text/javascript" src="qrc:///resources/qwebchannel.js"></script>
 </head>
 
 <body>
 <h1 class="title"></h1>
 <p class="paragraph"></p>
 <script>
-        new QWebChannel(eval("qt.webChannelTransport"), function(channel) {
+        new QWebChannel(qt.webChannelTransport, function(channel) {
             let services = channel.objects;
             services.agent.testMethod().then(function (result) {
                 document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethod result: ' + result + '<br>';
