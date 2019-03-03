@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     QWebEngineView webView;
     webView.page ()->setWebChannel(&channel);
-    webView.load (QUrl ("qrc:///resources/index.html"));
+    webView.load (QUrl ("qrc:///index.html"));
     webView.show();
 
     return app.exec();
