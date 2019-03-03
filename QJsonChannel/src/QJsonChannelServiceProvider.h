@@ -1,8 +1,8 @@
 /*
  * Copyright (C) 2012-2014 Matt Broadstone
- * Contact: http://bitbucket.org/devonit/qjsonrpc
+ * Contact: http://bitbucket.org/devonit/QJsonChannel
  *
- * This file is part of the QJsonRpc Library.
+ * This file is part of the QJsonChannel Library.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -14,30 +14,30 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  */
-#ifndef QJSONRPCSERVICEPROVIDER_H
-#define QJSONRPCSERVICEPROVIDER_H
+#ifndef QJsonChannelSERVICEPROVIDER_H
+#define QJsonChannelSERVICEPROVIDER_H
 
 #include "QJsonChannelGlobal.h"
 
-class QJsonRpcMessage;
-class QJsonRpcService;
-class QJsonRpcAbstractSocket;
-class QJsonRpcServiceProviderPrivate;
-class QJSONCHANNEL_EXPORT QJsonRpcServiceProvider
+class QJsonChannelMessage;
+class QJsonChannelService;
+class QJsonChannelAbstractSocket;
+class QJsonChannelServiceProviderPrivate;
+class QJSONCHANNEL_EXPORT QJsonChannelServiceProvider
 {
 public:
-	QJsonRpcServiceProvider();
-	~QJsonRpcServiceProvider();
-    virtual bool addService(QJsonRpcService *service);
-    virtual bool removeService(QJsonRpcService *service);
+	QJsonChannelServiceProvider();
+	~QJsonChannelServiceProvider();
+    virtual bool addService(QJsonChannelService *service);
+    virtual bool removeService(QJsonChannelService *service);
 
-	QJsonRpcMessage processMessage(const QJsonRpcMessage &message);
+	QJsonChannelMessage processMessage(const QJsonChannelMessage &message);
 protected:
 
 
 private:
-    QScopedPointer<QJsonRpcServiceProviderPrivate> d;
+    QScopedPointer<QJsonChannelServiceProviderPrivate> d;
 
 };
 
-#endif // QJSONRPCSERVICEPROVIDER_H
+#endif // QJsonChannelSERVICEPROVIDER_H

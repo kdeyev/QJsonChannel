@@ -7,21 +7,19 @@
 #include "QJsonChannelService_p.h"
 #include "QJsonChannelServiceProvider.h"
 
-class QJsonRpcServiceProviderPrivate
+class QJsonChannelServiceProviderPrivate
 {
 public:
-    //QByteArray serviceName(QJsonRpcService *service);
+    QJsonObject servicesInfo() const;
 
-	QJsonObject servicesInfo() const;
-
-    QHash<QByteArray, QJsonRpcService*> services;
+    QHash<QByteArray, QJsonChannelService*> services;
     QObjectCleanupHandler cleanupHandler;
 };
 
 
 
 
-QJsonObject QJsonRpcServiceProviderPrivate::servicesInfo() const
+QJsonObject QJsonChannelServiceProviderPrivate::servicesInfo() const
 {
 	QJsonObject objectInfos;
 	const auto end = services.constEnd();
@@ -32,38 +30,26 @@ QJsonObject QJsonRpcServiceProviderPrivate::servicesInfo() const
 	return objectInfos;
 }
 
-//QByteArray QJsonRpcServiceProviderPrivate::serviceName(QJsonRpcService *service)
-//{
-//	const QMetaObject *mo = service->metaObject();
-//	for (int i = 0; i < mo->classInfoCount(); i++) {
-//		const QMetaClassInfo mci = mo->classInfo(i);
-//		if (mci.name() == QLatin1String("serviceName"))
-//			return mci.value();
-//	}
-//
-//	return QByteArray(mo->className()).toLower();
-//}
-
-QJsonRpcServiceProvider::QJsonRpcServiceProvider()
-    : d(new QJsonRpcServiceProviderPrivate)
+QJsonChannelServiceProvider::QJsonChannelServiceProvider()
+    : d(new QJsonChannelServiceProviderPrivate)
 {
 }
 
-QJsonRpcServiceProvider::~QJsonRpcServiceProvider()
+QJsonChannelServiceProvider::~QJsonChannelServiceProvider()
 {
 }
 
 
-bool QJsonRpcServiceProvider::addService(QJsonRpcService *service)
+bool QJsonChannelServiceProvider::addService(QJsonChannelService *service)
 {
     QByteArray serviceName = service->serviceName();
     if (serviceName.isEmpty()) {
-        qJsonRpcDebug() << Q_FUNC_INFO << "service added without serviceName classinfo, aborting";
+        QJsonChannelDebug() << Q_FUNC_INFO << "service added without serviceName classinfo, aborting";
         return false;
     }
 
     if (d->services.contains(serviceName)) {
-        qJsonRpcDebug() << Q_FUNC_INFO << "service with name " << serviceName << " already exist";
+        QJsonChannelDebug() << Q_FUNC_INFO << "service with name " << serviceName << " already exist";
         return false;
     }
 
@@ -74,11 +60,11 @@ bool QJsonRpcServiceProvider::addService(QJsonRpcService *service)
     return true;
 }
 
-bool QJsonRpcServiceProvider::removeService(QJsonRpcService *service)
+bool QJsonChannelServiceProvider::removeService(QJsonChannelService *service)
 {
 	QByteArray serviceName = service->serviceName();
     if (!d->services.contains(serviceName)) {
-        qJsonRpcDebug() << Q_FUNC_INFO << "can not find service with name " << serviceName;
+        QJsonChannelDebug() << Q_FUNC_INFO << "can not find service with name " << serviceName;
         return false;
     }
 
@@ -87,46 +73,48 @@ bool QJsonRpcServiceProvider::removeService(QJsonRpcService *service)
     return true;
 }
 
-QJsonRpcMessage QJsonRpcServiceProvider::processMessage(const QJsonRpcMessage &message)
+QJsonChannelMessage QJsonChannelServiceProvider::processMessage(const QJsonChannelMessage &message)
 {
     switch (message.type()) {
-		case QJsonRpcMessage::Init:
+		case QJsonChannelMessage::Init:
 		{
-			QJsonRpcMessage response = message.createResponse(d->servicesInfo());
+			QJsonChannelMessage response = message.createResponse(d->servicesInfo());
 			return response;
 		}
-        case QJsonRpcMessage::Request:
-        case QJsonRpcMessage::Notification: {
+        case QJsonChannelMessage::Request:
+        case QJsonChannelMessage::Notification: {
             QByteArray serviceName = message.method().section(".", 0, -2).toLatin1();
             if (serviceName.isEmpty() || !d->services.contains(serviceName)) {
-                if (message.type() == QJsonRpcMessage::Request) {
-                    QJsonRpcMessage error =
-                        message.createErrorResponse(QJsonRpc::MethodNotFound,
+                if (message.type() == QJsonChannelMessage::Request) {
+                    QJsonChannelMessage error =
+                        message.createErrorResponse(QJsonChannel::MethodNotFound,
                             QString("service '%1' not found").arg(serviceName.constData()));
 					return error;
                 }
             } else {
-                QJsonRpcService *service = d->services.value(serviceName);
-                //service->d_func()->currentRequest = QJsonRpcServiceRequest(message, socket);
-                //if (message.type() == QJsonRpcMessage::Request)
-                //    QObject::connect(service, SIGNAL(result(QJsonRpcMessage)),
-                //                      socket, SLOT(notify(QJsonRpcMessage)), Qt::UniqueConnection);
-                QJsonRpcMessage response = service->dispatch(message);
+                QJsonChannelService *service = d->services.value(serviceName);
+                //service->d_func()->currentRequest = QJsonChannelServiceRequest(message, socket);
+                //if (message.type() == QJsonChannelMessage::Request)
+                //    QObject::connect(service, SIGNAL(result(QJsonChannelMessage)),
+                //                      socket, SLOT(notify(QJsonChannelMessage)), Qt::UniqueConnection);
+                QJsonChannelMessage response = service->dispatch(message);
 				return response;
             }
         }
         break;
 
-        case QJsonRpcMessage::Response:
+        case QJsonChannelMessage::Response:
             // we don't handle responses in the provider
-			return QJsonRpcMessage();
+			return QJsonChannelMessage();
             break;
 
         default: {
-            QJsonRpcMessage error =
-                message.createErrorResponse(QJsonRpc::InvalidRequest, QString("invalid request"));
+            QJsonChannelMessage error =
+                message.createErrorResponse(QJsonChannel::InvalidRequest, QString("invalid request"));
 			return error;
             break;
         }
     };
+
+    return QJsonChannelMessage();
 }

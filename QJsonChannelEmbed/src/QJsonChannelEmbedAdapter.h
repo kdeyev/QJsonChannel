@@ -10,9 +10,9 @@ class QJsonChannelEmbedAdapter : public QObject {
 	Q_OBJECT
 		friend QJsonChannelEmbed;
 private:
-	QJsonChannelEmbedAdapter(QJsonRpcServiceProvider* serviceRepository) : _serviceRepository(serviceRepository) {}
+	QJsonChannelEmbedAdapter(QJsonChannelServiceProvider* serviceRepository) : _serviceRepository(serviceRepository) {}
 	public Q_SLOTS :
 		QByteArray invokeJsonRPC(const QByteArray& jsonRpc);
 private:
-	QJsonRpcServiceProvider* _serviceRepository = nullptr;
+	QJsonChannelServiceProvider* _serviceRepository = nullptr;
 };

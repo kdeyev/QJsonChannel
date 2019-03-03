@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
 	QJsonChannelEmbed channel;
-    channel._serviceRepository.addService(new QJsonRpcService("agent", new TestService));
+    channel._serviceRepository.addService(new QJsonChannelService("agent", new TestService));
 
     QWebEngineView webView;
     webView.page ()->setWebChannel(&channel._channel);

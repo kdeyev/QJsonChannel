@@ -1,60 +1,43 @@
-/*
- * Copyright (C) 2012-2013 Matt Broadstone
- * Contact: http://bitbucket.org/devonit/qjsonrpc
- *
- * This file is part of the QJsonRpc Library.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- */
-
 #include <QDebug>
 
 #include <QJsonDocument>
 
 #include "QJsonChannelMessage.h"
 
-class QJsonRpcMessagePrivate : public QSharedData
+class QJsonChannelMessagePrivate : public QSharedData
 {
 public:
-    QJsonRpcMessagePrivate();
-    ~QJsonRpcMessagePrivate();
-    QJsonRpcMessagePrivate(const QJsonRpcMessagePrivate &other);
+    QJsonChannelMessagePrivate();
+    ~QJsonChannelMessagePrivate();
+    QJsonChannelMessagePrivate(const QJsonChannelMessagePrivate &other);
 
     void initializeWithObject(const QJsonObject &message);
-    static QJsonRpcMessage createBasicRequest(const QString &method, const QJsonArray &params);
-    static QJsonRpcMessage createBasicRequest(const QString &method,
+    static QJsonChannelMessage createBasicRequest(const QString &method, const QJsonArray &params);
+    static QJsonChannelMessage createBasicRequest(const QString &method,
                                               const QJsonObject &namedParameters);
 
-    QJsonRpcMessage::Type type;
+    QJsonChannelMessage::Type type;
     QScopedPointer<QJsonObject> object;
 
     static int uniqueRequestCounter;
 };
 
-int QJsonRpcMessagePrivate::uniqueRequestCounter = 0;
+int QJsonChannelMessagePrivate::uniqueRequestCounter = 0;
 
-QJsonRpcMessagePrivate::QJsonRpcMessagePrivate()
-    : type(QJsonRpcMessage::Invalid),
+QJsonChannelMessagePrivate::QJsonChannelMessagePrivate()
+    : type(QJsonChannelMessage::Invalid),
       object(0)
 {
 }
 
-QJsonRpcMessagePrivate::QJsonRpcMessagePrivate(const QJsonRpcMessagePrivate &other)
+QJsonChannelMessagePrivate::QJsonChannelMessagePrivate(const QJsonChannelMessagePrivate &other)
     : QSharedData(other),
       type(other.type),
       object(other.object ? new QJsonObject(*other.object) : 0)
 {
 }
 
-void QJsonRpcMessagePrivate::initializeWithObject(const QJsonObject &message)
+void QJsonChannelMessagePrivate::initializeWithObject(const QJsonObject &message)
 {
     object.reset(new QJsonObject(message));
     if (message.contains(QLatin1String("id"))) {
@@ -62,59 +45,59 @@ void QJsonRpcMessagePrivate::initializeWithObject(const QJsonObject &message)
             message.contains(QLatin1String("error"))) {
             if (message.contains(QLatin1String("error")) &&
                 !message.value(QLatin1String("error")).isNull())
-                type = QJsonRpcMessage::Error;
+                type = QJsonChannelMessage::Error;
             else
-                type = QJsonRpcMessage::Response;
+                type = QJsonChannelMessage::Response;
         } else if (message.contains(QLatin1String("method"))) {
 			if (message.value(QLatin1String("method")) == "__init__") {
-				type = QJsonRpcMessage::Init;
+				type = QJsonChannelMessage::Init;
 			} else {
-				type = QJsonRpcMessage::Request;
+				type = QJsonChannelMessage::Request;
 			}
         }
     } else {
         if (message.contains(QLatin1String("method")))
-            type = QJsonRpcMessage::Notification;
+            type = QJsonChannelMessage::Notification;
     }
 }
 
-QJsonRpcMessagePrivate::~QJsonRpcMessagePrivate()
+QJsonChannelMessagePrivate::~QJsonChannelMessagePrivate()
 {
 }
 
-QJsonRpcMessage::QJsonRpcMessage()
-    : d(new QJsonRpcMessagePrivate)
+QJsonChannelMessage::QJsonChannelMessage()
+    : d(new QJsonChannelMessagePrivate)
 {
     d->object.reset(new QJsonObject);
 }
 
-QJsonRpcMessage::QJsonRpcMessage(const QJsonRpcMessage &other)
+QJsonChannelMessage::QJsonChannelMessage(const QJsonChannelMessage &other)
     : d(other.d)
 {
 }
 
-QJsonRpcMessage::~QJsonRpcMessage()
+QJsonChannelMessage::~QJsonChannelMessage()
 {
 }
 
-QJsonRpcMessage &QJsonRpcMessage::operator=(const QJsonRpcMessage &other)
+QJsonChannelMessage &QJsonChannelMessage::operator=(const QJsonChannelMessage &other)
 {
     d = other.d;
     return *this;
 }
 
-bool QJsonRpcMessage::operator==(const QJsonRpcMessage &message) const
+bool QJsonChannelMessage::operator==(const QJsonChannelMessage &message) const
 {
     if (message.d == d)
         return true;
 
     if (message.type() == type()) {
-        if (message.type() == QJsonRpcMessage::Error) {
+        if (message.type() == QJsonChannelMessage::Error) {
             return (message.errorCode() == errorCode() &&
                     message.errorMessage() == errorMessage() &&
                     message.errorData() == errorData());
         } else {
-            if (message.type() == QJsonRpcMessage::Notification) {
+            if (message.type() == QJsonChannelMessage::Notification) {
                 return (message.method() == method() &&
                         message.params() == params());
             } else {
@@ -128,18 +111,18 @@ bool QJsonRpcMessage::operator==(const QJsonRpcMessage &message) const
     return false;
 }
 
-QJsonRpcMessage QJsonRpcMessage::fromJson(const QByteArray &message)
+QJsonChannelMessage QJsonChannelMessage::fromJson(const QByteArray &message)
 {
-    QJsonRpcMessage result;
+    QJsonChannelMessage result;
     QJsonParseError error;
     QJsonDocument document = QJsonDocument::fromJson(message, &error);
     if (error.error != QJsonParseError::NoError) {
-        qJsonRpcDebug() << Q_FUNC_INFO << error.errorString();
+        QJsonChannelDebug() << Q_FUNC_INFO << error.errorString();
         return result;
     }
 
     if (!document.isObject()) {
-        qJsonRpcDebug() << Q_FUNC_INFO << "invalid message: " << message;
+        QJsonChannelDebug() << Q_FUNC_INFO << "invalid message: " << message;
         return result;
     }
 
@@ -147,21 +130,21 @@ QJsonRpcMessage QJsonRpcMessage::fromJson(const QByteArray &message)
     return result;
 }
 
-QJsonRpcMessage QJsonRpcMessage::fromObject(const QJsonObject &message)
+QJsonChannelMessage QJsonChannelMessage::fromObject(const QJsonObject &message)
 {
-    QJsonRpcMessage result;
+    QJsonChannelMessage result;
     result.d->initializeWithObject(message);
     return result;
 }
 
-QJsonObject QJsonRpcMessage::toObject() const
+QJsonObject QJsonChannelMessage::toObject() const
 {
     if (d->object)
         return QJsonObject(*d->object);
     return QJsonObject();
 }
 
-QByteArray QJsonRpcMessage::toJson() const
+QByteArray QJsonChannelMessage::toJson() const
 {
     if (d->object) {
         QJsonDocument doc(*d->object);
@@ -171,19 +154,19 @@ QByteArray QJsonRpcMessage::toJson() const
     return QByteArray();
 }
 
-bool QJsonRpcMessage::isValid() const
+bool QJsonChannelMessage::isValid() const
 {
-    return d->type != QJsonRpcMessage::Invalid;
+    return d->type != QJsonChannelMessage::Invalid;
 }
 
-QJsonRpcMessage::Type QJsonRpcMessage::type() const
+QJsonChannelMessage::Type QJsonChannelMessage::type() const
 {
     return d->type;
 }
 
-QJsonRpcMessage QJsonRpcMessagePrivate::createBasicRequest(const QString &method, const QJsonArray &params)
+QJsonChannelMessage QJsonChannelMessagePrivate::createBasicRequest(const QString &method, const QJsonArray &params)
 {
-    QJsonRpcMessage request;
+    QJsonChannelMessage request;
     request.d->object->insert(QLatin1String("jsonrpc"), QLatin1String("2.0"));
     request.d->object->insert(QLatin1String("method"), method);
     if (!params.isEmpty())
@@ -191,10 +174,10 @@ QJsonRpcMessage QJsonRpcMessagePrivate::createBasicRequest(const QString &method
     return request;
 }
 
-QJsonRpcMessage QJsonRpcMessagePrivate::createBasicRequest(const QString &method,
+QJsonChannelMessage QJsonChannelMessagePrivate::createBasicRequest(const QString &method,
                                                            const QJsonObject &namedParameters)
 {
-    QJsonRpcMessage request;
+    QJsonChannelMessage request;
     request.d->object->insert(QLatin1String("jsonrpc"), QLatin1String("2.0"));
     request.d->object->insert(QLatin1String("method"), method);
     if (!namedParameters.isEmpty())
@@ -202,75 +185,75 @@ QJsonRpcMessage QJsonRpcMessagePrivate::createBasicRequest(const QString &method
     return request;
 }
 
-QJsonRpcMessage QJsonRpcMessage::createRequest(const QString &method, const QJsonArray &params)
+QJsonChannelMessage QJsonChannelMessage::createRequest(const QString &method, const QJsonArray &params)
 {
-    QJsonRpcMessage request = QJsonRpcMessagePrivate::createBasicRequest(method, params);
-    request.d->type = QJsonRpcMessage::Request;
-    QJsonRpcMessagePrivate::uniqueRequestCounter++;
-    request.d->object->insert(QLatin1String("id"), QJsonRpcMessagePrivate::uniqueRequestCounter);
+    QJsonChannelMessage request = QJsonChannelMessagePrivate::createBasicRequest(method, params);
+    request.d->type = QJsonChannelMessage::Request;
+    QJsonChannelMessagePrivate::uniqueRequestCounter++;
+    request.d->object->insert(QLatin1String("id"), QJsonChannelMessagePrivate::uniqueRequestCounter);
     return request;
 }
 
-QJsonRpcMessage QJsonRpcMessage::createRequest(const QString &method, const QJsonValue &param)
+QJsonChannelMessage QJsonChannelMessage::createRequest(const QString &method, const QJsonValue &param)
 {
     QJsonArray params;
     params.append(param);
     return createRequest(method, params);
 }
 
-QJsonRpcMessage QJsonRpcMessage::createRequest(const QString &method,
+QJsonChannelMessage QJsonChannelMessage::createRequest(const QString &method,
                                                const QJsonObject &namedParameters)
 {
-    QJsonRpcMessage request =
-        QJsonRpcMessagePrivate::createBasicRequest(method, namedParameters);
-    request.d->type = QJsonRpcMessage::Request;
-    QJsonRpcMessagePrivate::uniqueRequestCounter++;
-    request.d->object->insert(QLatin1String("id"), QJsonRpcMessagePrivate::uniqueRequestCounter);
+    QJsonChannelMessage request =
+        QJsonChannelMessagePrivate::createBasicRequest(method, namedParameters);
+    request.d->type = QJsonChannelMessage::Request;
+    QJsonChannelMessagePrivate::uniqueRequestCounter++;
+    request.d->object->insert(QLatin1String("id"), QJsonChannelMessagePrivate::uniqueRequestCounter);
     return request;
 }
 
-QJsonRpcMessage QJsonRpcMessage::createNotification(const QString &method, const QJsonArray &params)
+QJsonChannelMessage QJsonChannelMessage::createNotification(const QString &method, const QJsonArray &params)
 {
-    QJsonRpcMessage notification = QJsonRpcMessagePrivate::createBasicRequest(method, params);
-    notification.d->type = QJsonRpcMessage::Notification;
+    QJsonChannelMessage notification = QJsonChannelMessagePrivate::createBasicRequest(method, params);
+    notification.d->type = QJsonChannelMessage::Notification;
     return notification;
 }
 
-QJsonRpcMessage QJsonRpcMessage::createNotification(const QString &method, const QJsonValue &param)
+QJsonChannelMessage QJsonChannelMessage::createNotification(const QString &method, const QJsonValue &param)
 {
     QJsonArray params;
     params.append(param);
     return createNotification(method, params);
 }
 
-QJsonRpcMessage QJsonRpcMessage::createNotification(const QString &method,
+QJsonChannelMessage QJsonChannelMessage::createNotification(const QString &method,
                                                     const QJsonObject &namedParameters)
 {
-    QJsonRpcMessage notification =
-        QJsonRpcMessagePrivate::createBasicRequest(method, namedParameters);
-    notification.d->type = QJsonRpcMessage::Notification;
+    QJsonChannelMessage notification =
+        QJsonChannelMessagePrivate::createBasicRequest(method, namedParameters);
+    notification.d->type = QJsonChannelMessage::Notification;
     return notification;
 }
 
-QJsonRpcMessage QJsonRpcMessage::createResponse(const QJsonValue &result) const
+QJsonChannelMessage QJsonChannelMessage::createResponse(const QJsonValue &result) const
 {
-    QJsonRpcMessage response;
+    QJsonChannelMessage response;
     if (d->object->contains(QLatin1String("id"))) {
         QJsonObject *object = response.d->object.data();
         object->insert(QLatin1String("jsonrpc"), QLatin1String("2.0"));
         object->insert(QLatin1String("id"), d->object->value(QLatin1String("id")));
         object->insert(QLatin1String("result"), result);
-        response.d->type = QJsonRpcMessage::Response;
+        response.d->type = QJsonChannelMessage::Response;
     }
 
     return response;
 }
 
-QJsonRpcMessage QJsonRpcMessage::createErrorResponse(QJsonRpc::ErrorCode code,
+QJsonChannelMessage QJsonChannelMessage::createErrorResponse(QJsonChannel::ErrorCode code,
                                                      const QString &message,
                                                      const QJsonValue &data) const
 {
-    QJsonRpcMessage response;
+    QJsonChannelMessage response;
     QJsonObject error;
     error.insert(QLatin1String("code"), code);
     if (!message.isEmpty())
@@ -278,7 +261,7 @@ QJsonRpcMessage QJsonRpcMessage::createErrorResponse(QJsonRpc::ErrorCode code,
     if (!data.isUndefined())
         error.insert(QLatin1String("data"), data);
 
-    response.d->type = QJsonRpcMessage::Error;
+    response.d->type = QJsonChannelMessage::Error;
     QJsonObject *object = response.d->object.data();
     object->insert(QLatin1String("jsonrpc"), QLatin1String("2.0"));
     if (d->object->contains(QLatin1String("id")))
@@ -289,9 +272,9 @@ QJsonRpcMessage QJsonRpcMessage::createErrorResponse(QJsonRpc::ErrorCode code,
     return response;
 }
 
-int QJsonRpcMessage::id() const
+int QJsonChannelMessage::id() const
 {
-    if (d->type == QJsonRpcMessage::Notification || !d->object)
+    if (d->type == QJsonChannelMessage::Notification || !d->object)
         return -1;
 
     const QJsonValue &value = d->object->value(QLatin1String("id"));
@@ -300,17 +283,17 @@ int QJsonRpcMessage::id() const
     return value.toInt();
 }
 
-QString QJsonRpcMessage::method() const
+QString QJsonChannelMessage::method() const
 {
-    if (d->type == QJsonRpcMessage::Response || !d->object)
+    if (d->type == QJsonChannelMessage::Response || !d->object)
         return QString();
 
     return d->object->value(QLatin1String("method")).toString();
 }
 
-QJsonValue QJsonRpcMessage::params() const
+QJsonValue QJsonChannelMessage::params() const
 {
-    if (d->type == QJsonRpcMessage::Response || d->type == QJsonRpcMessage::Error)
+    if (d->type == QJsonChannelMessage::Response || d->type == QJsonChannelMessage::Error)
         return QJsonValue(QJsonValue::Undefined);
     if (!d->object)
         return QJsonValue(QJsonValue::Undefined);
@@ -318,17 +301,17 @@ QJsonValue QJsonRpcMessage::params() const
     return d->object->value(QLatin1String("params"));
 }
 
-QJsonValue QJsonRpcMessage::result() const
+QJsonValue QJsonChannelMessage::result() const
 {
-    if (d->type != QJsonRpcMessage::Response || !d->object)
+    if (d->type != QJsonChannelMessage::Response || !d->object)
         return QJsonValue(QJsonValue::Undefined);
 
     return d->object->value(QLatin1String("result"));
 }
 
-int QJsonRpcMessage::errorCode() const
+int QJsonChannelMessage::errorCode() const
 {
-    if (d->type != QJsonRpcMessage::Error || !d->object)
+    if (d->type != QJsonChannelMessage::Error || !d->object)
         return 0;
 
     QJsonObject error =
@@ -339,9 +322,9 @@ int QJsonRpcMessage::errorCode() const
     return value.toInt();
 }
 
-QString QJsonRpcMessage::errorMessage() const
+QString QJsonChannelMessage::errorMessage() const
 {
-    if (d->type != QJsonRpcMessage::Error || !d->object)
+    if (d->type != QJsonChannelMessage::Error || !d->object)
         return QString();
 
     QJsonObject error =
@@ -349,9 +332,9 @@ QString QJsonRpcMessage::errorMessage() const
     return error.value(QLatin1String("message")).toString();
 }
 
-QJsonValue QJsonRpcMessage::errorData() const
+QJsonValue QJsonChannelMessage::errorData() const
 {
-    if (d->type != QJsonRpcMessage::Error || !d->object)
+    if (d->type != QJsonChannelMessage::Error || !d->object)
         return QJsonValue(QJsonValue::Undefined);
 
     QJsonObject error =
@@ -359,36 +342,36 @@ QJsonValue QJsonRpcMessage::errorData() const
     return error.value(QLatin1String("data"));
 }
 
-static QDebug operator<<(QDebug dbg, QJsonRpcMessage::Type type)
+static QDebug operator<<(QDebug dbg, QJsonChannelMessage::Type type)
 {
     switch (type) {
-    case QJsonRpcMessage::Request:
-        return dbg << "QJsonRpcMessage::Request";
-    case QJsonRpcMessage::Response:
-        return dbg << "QJsonRpcMessage::Response";
-    case QJsonRpcMessage::Notification:
-        return dbg << "QJsonRpcMessage::Notification";
-    case QJsonRpcMessage::Error:
-        return dbg << "QJsonRpcMessage::Error";
+    case QJsonChannelMessage::Request:
+        return dbg << "QJsonChannelMessage::Request";
+    case QJsonChannelMessage::Response:
+        return dbg << "QJsonChannelMessage::Response";
+    case QJsonChannelMessage::Notification:
+        return dbg << "QJsonChannelMessage::Notification";
+    case QJsonChannelMessage::Error:
+        return dbg << "QJsonChannelMessage::Error";
     default:
-        return dbg << "QJsonRpcMessage::Invalid";
+        return dbg << "QJsonChannelMessage::Invalid";
     }
 }
 
-QDebug operator<<(QDebug dbg, const QJsonRpcMessage &msg)
+QDebug operator<<(QDebug dbg, const QJsonChannelMessage &msg)
 {
-    dbg.nospace() << "QJsonRpcMessage(type=" << msg.type();
-    if (msg.type() != QJsonRpcMessage::Notification) {
+    dbg.nospace() << "QJsonChannelMessage(type=" << msg.type();
+    if (msg.type() != QJsonChannelMessage::Notification) {
         dbg.nospace() << ", id=" << msg.id();
     }
 
-    if (msg.type() == QJsonRpcMessage::Request ||
-        msg.type() == QJsonRpcMessage::Notification) {
+    if (msg.type() == QJsonChannelMessage::Request ||
+        msg.type() == QJsonChannelMessage::Notification) {
         dbg.nospace() << ", method=" << msg.method()
                       << ", params=" << msg.params();
-    } else if (msg.type() == QJsonRpcMessage::Response) {
+    } else if (msg.type() == QJsonChannelMessage::Response) {
         dbg.nospace() << ", result=" << msg.result();
-    } else if (msg.type() == QJsonRpcMessage::Error) {
+    } else if (msg.type() == QJsonChannelMessage::Error) {
         dbg.nospace() << ", code=" << msg.errorCode()
                       << ", message=" << msg.errorMessage()
                       << ", data=" << msg.errorData();

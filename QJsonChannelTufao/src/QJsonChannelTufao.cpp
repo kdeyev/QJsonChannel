@@ -23,8 +23,8 @@ QJsonChannelTufao::QJsonChannelTufao() {
 			res.headers().insert("Access-Control-Allow-Methods", "POST");
 			res.headers().insert("Access-Control-Allow-Headers", "accept, content-type");
 
-			QJsonRpcMessage request = QJsonRpcMessage::fromJson(data);
-			QJsonRpcMessage response = _serviceRepository.processMessage(request);
+			QJsonChannelMessage request = QJsonChannelMessage::fromJson(data);
+			QJsonChannelMessage response = _serviceRepository.processMessage(request);
 			data = response.toJson();
 			res.end(data);
 		}
@@ -52,8 +52,8 @@ QJsonChannelTufao::QJsonChannelTufao() {
 
 		QObject::connect(socket, &AbstractMessageSocket::newMessage,
                 [socket, this](const QByteArray& data){
-					QJsonRpcMessage request = QJsonRpcMessage::fromJson(data);
-					QJsonRpcMessage response = _serviceRepository.processMessage(request);
+					QJsonChannelMessage request = QJsonChannelMessage::fromJson(data);
+					QJsonChannelMessage response = _serviceRepository.processMessage(request);
 					socket->sendMessage (response.toJson());
 				});
     });

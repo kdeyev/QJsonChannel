@@ -1,20 +1,3 @@
-/*
- * Copyright (C) 2012-2014 Matt Broadstone
- * Copyright (C) 2013 Fargier Sylvain
- * Contact: http://bitbucket.org/devonit/qjsonrpc
- *
- * This file is part of the QJsonRpc Library.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- */
 #include <QVarLengthArray>
 #include <QMetaMethod>
 #include <QEventLoop>
@@ -22,74 +5,8 @@
 
 #include "QJsonChannelService_p.h"
 #include "QJsonChannelService.h"
-//
-//QJsonRpcServiceRequest::QJsonRpcServiceRequest()
-//    : d(new QJsonRpcServiceRequestPrivate)
-//{
-//}
-//
-//QJsonRpcServiceRequest::QJsonRpcServiceRequest(const QJsonRpcServiceRequest &other)
-//    : d (other.d)
-//{
-//}
-//
-//QJsonRpcServiceRequest::QJsonRpcServiceRequest(const QJsonRpcMessage &request,
-//                                               QJsonRpcAbstractSocket *socket)
-//    : d(new QJsonRpcServiceRequestPrivate)
-//{
-//    d->request = request;
-//    d->socket = socket;
-//}
-//
-//QJsonRpcServiceRequest &QJsonRpcServiceRequest::operator=(const QJsonRpcServiceRequest &other)
-//{
-//    d = other.d;
-//    return *this;
-//}
-//
-//QJsonRpcServiceRequest::~QJsonRpcServiceRequest()
-//{
-//}
-//
-//bool QJsonRpcServiceRequest::isValid() const
-//{
-//    return (d && d->request.isValid() && !d->socket.isNull());
-//}
-//
-//QJsonRpcMessage QJsonRpcServiceRequest::request() const
-//{
-//    return d->request;
-//}
-//
-//QJsonRpcAbstractSocket *QJsonRpcServiceRequest::socket() const
-//{
-//    return d->socket;
-//}
-//
-//bool QJsonRpcServiceRequest::respond(QVariant returnValue)
-//{
-//    if (!d->socket) {
-//        qJsonRpcDebug() << Q_FUNC_INFO << "socket was closed";
-//        return false;
-//    }
-//
-//    QJsonRpcMessage response =
-//        d->request.createResponse(QJsonRpcServicePrivate::convertReturnValue(returnValue));
-//    return respond(response);
-//}
-//
-//bool QJsonRpcServiceRequest::respond(const QJsonRpcMessage &response)
-//{
-//    if (!d->socket) {
-//        qJsonRpcDebug() << Q_FUNC_INFO << "socket was closed";
-//        return false;
-//    }
-//
-//    QMetaObject::invokeMethod(d->socket, "notify", Q_ARG(QJsonRpcMessage, response));
-//    return true;
-//}
 
-QJsonRpcServicePrivate::ParameterInfo::ParameterInfo(const QString &n, int t, bool o)
+QJsonChannelServicePrivate::ParameterInfo::ParameterInfo(const QString &n, int t, bool o)
     : type(t),
       jsType(convertVariantTypeToJSType(t)),
       name(n),
@@ -97,14 +14,14 @@ QJsonRpcServicePrivate::ParameterInfo::ParameterInfo(const QString &n, int t, bo
 {
 }
 
-QJsonRpcServicePrivate::MethodInfo::MethodInfo()
+QJsonChannelServicePrivate::MethodInfo::MethodInfo()
     : returnType(QMetaType::Void),
       valid(false),
       hasOut(false)
 {
 }
 
-QJsonRpcServicePrivate::MethodInfo::MethodInfo(const QMetaMethod &method)
+QJsonChannelServicePrivate::MethodInfo::MethodInfo(const QMetaMethod &method)
     : returnType(QMetaType::Void),
       valid(true),
       hasOut(false)
@@ -113,7 +30,7 @@ QJsonRpcServicePrivate::MethodInfo::MethodInfo(const QMetaMethod &method)
 
     returnType = method.returnType();
     if (returnType == QMetaType::UnknownType) {
-        qJsonRpcDebug() << "QJsonRpcService: can't bind method's return type"
+        QJsonChannelDebug() << "QJsonChannelService: can't bind method's return type"
                       << QString(method.name());
         valid = false;
         return;
@@ -135,7 +52,7 @@ QJsonRpcServicePrivate::MethodInfo::MethodInfo(const QMetaMethod &method)
 
         int type = QMetaType::type(parameterType);
         if (type == 0) {
-            qJsonRpcDebug() << "QJsonRpcService: can't bind method's parameter"
+            QJsonChannelDebug() << "QJsonChannelService: can't bind method's parameter"
                           << QString(parameterType);
             valid = false;
             break;
@@ -156,44 +73,31 @@ QByteArray getServiceName(QObject *obj) {
 	return QByteArray(mo->className()).toLower();
 }
 
-QJsonRpcService::QJsonRpcService(QObject *parent) : QObject(parent) {
-	d_ptr.reset(new QJsonRpcServicePrivate(this, getServiceName(this), this));
+QJsonChannelService::QJsonChannelService(QObject *parent) : QObject(parent) {
+	d_ptr.reset(new QJsonChannelServicePrivate(this, getServiceName(this), this));
 }
 
-QJsonRpcService::QJsonRpcService(const QByteArray& name, QObject *serviceObj, QObject *parent)
+QJsonChannelService::QJsonChannelService(const QByteArray& name, QObject *serviceObj, QObject *parent)
     : QObject(parent)
 {
-	d_ptr.reset(new QJsonRpcServicePrivate(this, name, serviceObj));
+	d_ptr.reset(new QJsonChannelServicePrivate(this, name, serviceObj));
 }
 
-QJsonRpcService::~QJsonRpcService()
+QJsonChannelService::~QJsonChannelService()
 {
 }
 
-const QByteArray& QJsonRpcService::serviceName() const {
+const QByteArray& QJsonChannelService::serviceName() const {
 	return d_ptr->serviceName;
 }
 
-const QJsonObject& QJsonRpcService::serviceInfo() const {
+const QJsonObject& QJsonChannelService::serviceInfo() const {
 	return d_ptr->serviceInfo;
 }
 
-const QMetaObject* QJsonRpcService::serviceMetaObject() const {
+const QMetaObject* QJsonChannelService::serviceMetaObject() const {
 	return d_ptr->serviceObj->metaObject();
 }
-
-//QJsonRpcServiceRequest QJsonRpcService::currentRequest() const
-//{
-//    Q_D(const QJsonRpcService);
-//    return d->currentRequest;
-//}
-//
-//void QJsonRpcService::beginDelayedResponse()
-//{
-//    Q_D(QJsonRpcService);
-//    d->delayedResponse = true;
-//}
-
 
 QString convertToString(QJsonValue::Type t) {
 	switch (t) {
@@ -223,7 +127,7 @@ QJsonObject createParameterDescription(const QString& desc, int type) {
 	return param;
 }
 
-QJsonObject QJsonRpcServicePrivate::createServiceInfo() const
+QJsonObject QJsonChannelServicePrivate::createServiceInfo() const
 {
 	QJsonObject data;
 	data["jsonrpc"] = "2.0";
@@ -319,7 +223,7 @@ QJsonObject QJsonRpcServicePrivate::createServiceInfo() const
 	return data;
 }
 
-int QJsonRpcServicePrivate::convertVariantTypeToJSType(int type)
+int QJsonChannelServicePrivate::convertVariantTypeToJSType(int type)
 {
     switch (type) {
     case QMetaType::Int:
@@ -351,8 +255,8 @@ int QJsonRpcServicePrivate::convertVariantTypeToJSType(int type)
     return QJsonValue::Undefined;
 }
 
-int QJsonRpcServicePrivate::qjsonRpcMessageType = qRegisterMetaType<QJsonRpcMessage>("QJsonRpcMessage");
-void QJsonRpcServicePrivate::cacheInvokableInfo()
+int QJsonChannelServicePrivate::QJsonChannelMessageType = qRegisterMetaType<QJsonChannelMessage>("QJsonChannelMessage");
+void QJsonChannelServicePrivate::cacheInvokableInfo()
 {
 	QObject* q = serviceObj;
     const QMetaObject *obj = q->metaObject();
@@ -382,7 +286,7 @@ void QJsonRpcServicePrivate::cacheInvokableInfo()
 }
 
 static bool jsParameterCompare(const QJsonArray &parameters,
-                               const QJsonRpcServicePrivate::MethodInfo &info)
+                               const QJsonChannelServicePrivate::MethodInfo &info)
 {
     int j = 0;
     for (int i = 0; i < info.parameters.size() && j < parameters.size(); ++i) {
@@ -399,7 +303,7 @@ static bool jsParameterCompare(const QJsonArray &parameters,
 }
 
 static  bool jsParameterCompare(const QJsonObject &parameters,
-                                const QJsonRpcServicePrivate::MethodInfo &info)
+                                const QJsonChannelServicePrivate::MethodInfo &info)
 {
     for (int i = 0; i < info.parameters.size(); ++i) {
         int jsType = info.parameters.at(i).jsType;
@@ -418,7 +322,7 @@ static  bool jsParameterCompare(const QJsonObject &parameters,
 }
 
 static inline QVariant convertArgument(const QJsonValue &argument,
-                                       const QJsonRpcServicePrivate::ParameterInfo &info)
+                                       const QJsonChannelServicePrivate::ParameterInfo &info)
 {
     if (argument.isUndefined())
         return QVariant(info.type, Q_NULLPTR);
@@ -453,7 +357,7 @@ static inline QVariant convertArgument(const QJsonValue &argument,
     return QVariant();
 }
 
-QJsonValue QJsonRpcServicePrivate::convertReturnValue(QVariant &returnValue)
+QJsonValue QJsonChannelServicePrivate::convertReturnValue(QVariant &returnValue)
 {
     if (static_cast<int>(returnValue.type()) == qMetaTypeId<QJsonObject>())
         return QJsonValue(returnValue.toJsonObject());
@@ -481,23 +385,23 @@ QJsonValue QJsonRpcServicePrivate::convertReturnValue(QVariant &returnValue)
     }
 }
 
-static inline QByteArray methodName(const QJsonRpcMessage &request)
+static inline QByteArray methodName(const QJsonChannelMessage &request)
 {
     const QString &methodPath(request.method());
     return methodPath.midRef(methodPath.lastIndexOf('.') + 1).toLatin1();
 }
 
-QJsonRpcMessage QJsonRpcService::dispatch(const QJsonRpcMessage &request)
+QJsonChannelMessage QJsonChannelService::dispatch(const QJsonChannelMessage &request)
 {
-    Q_D(QJsonRpcService);
-    if (request.type() != QJsonRpcMessage::Request &&
-        request.type() != QJsonRpcMessage::Notification) {
-        return request.createErrorResponse(QJsonRpc::InvalidRequest, "invalid request");
+    Q_D(QJsonChannelService);
+    if (request.type() != QJsonChannelMessage::Request &&
+        request.type() != QJsonChannelMessage::Notification) {
+        return request.createErrorResponse(QJsonChannel::InvalidRequest, "invalid request");
     }
 
     const QByteArray &method(methodName(request));
     if (!d->invokableMethodHash.contains(method)) {
-        return request.createErrorResponse(QJsonRpc::MethodNotFound, "invalid method called");
+        return request.createErrorResponse(QJsonChannel::MethodNotFound, "invalid method called");
     }
 
     int idx = -1;
@@ -510,7 +414,7 @@ QJsonRpcMessage QJsonRpcService::dispatch(const QJsonRpcMessage &request)
 
     bool usingNamedParameters = params.isObject();
     foreach (int methodIndex, indexes) {
-        QJsonRpcServicePrivate::MethodInfo &info = d->methodInfoHash[methodIndex];
+        QJsonChannelServicePrivate::MethodInfo &info = d->methodInfoHash[methodIndex];
         bool methodMatch = usingNamedParameters ?
             jsParameterCompare(params.toObject(), info) :
             jsParameterCompare(params.toArray(), info);
@@ -527,7 +431,7 @@ QJsonRpcMessage QJsonRpcService::dispatch(const QJsonRpcMessage &request)
                 parameters.append(returnValue.data());
 
             for (int i = 0; i < info.parameters.size(); ++i) {
-                const QJsonRpcServicePrivate::ParameterInfo &parameterInfo = info.parameters.at(i);
+                const QJsonChannelServicePrivate::ParameterInfo &parameterInfo = info.parameters.at(i);
                 QJsonValue incomingArgument = usingNamedParameters ?
                     params.toObject().value(parameterInfo.name) :
                     params.toArray().at(i);
@@ -537,7 +441,7 @@ QJsonRpcMessage QJsonRpcService::dispatch(const QJsonRpcMessage &request)
                     QString message = incomingArgument.isUndefined() ?
                         QString("failed to construct default object for '%1'").arg(parameterInfo.name) :
                         QString("failed to convert from JSON for '%1'").arg(parameterInfo.name);
-                    return request.createErrorResponse(QJsonRpc::InvalidParams, message);
+                    return request.createErrorResponse(QJsonChannel::InvalidParams, message);
                 }
 
                 arguments.push_back(argument);
@@ -553,35 +457,35 @@ QJsonRpcMessage QJsonRpcService::dispatch(const QJsonRpcMessage &request)
     }
 
     if (idx == -1) {
-        return request.createErrorResponse(QJsonRpc::InvalidParams, "invalid parameters");
+        return request.createErrorResponse(QJsonChannel::InvalidParams, "invalid parameters");
     }
 
-    QJsonRpcServicePrivate::MethodInfo &info = d->methodInfoHash[idx];
+    QJsonChannelServicePrivate::MethodInfo &info = d->methodInfoHash[idx];
 
 	QObject* serviceObj = d->serviceObj;
     bool success =
 		serviceObj->qt_metacall(QMetaObject::InvokeMetaMethod, idx, parameters.data()) < 0;
     if (!success) {
         QString message = QString("dispatch for method '%1' failed").arg(method.constData());
-        return request.createErrorResponse(QJsonRpc::InvalidRequest, message);
+        return request.createErrorResponse(QJsonChannel::InvalidRequest, message);
     }
 
     //if (d->delayedResponse) {
     //    d->delayedResponse = false;
-    //    return QJsonRpcMessage();
+    //    return QJsonChannelMessage();
     //}
 
     if (info.hasOut) {
         QJsonArray ret;
         if (info.returnType != QMetaType::Void)
-            ret.append(QJsonRpcServicePrivate::convertReturnValue(returnValue));
+            ret.append(QJsonChannelServicePrivate::convertReturnValue(returnValue));
         for (int i = 0; i < info.parameters.size(); ++i)
             if (info.parameters.at(i).out)
-                ret.append(QJsonRpcServicePrivate::convertReturnValue(arguments[i]));
+                ret.append(QJsonChannelServicePrivate::convertReturnValue(arguments[i]));
         if (ret.size() > 1)
             return request.createResponse(ret);
         return request.createResponse(ret.first());
     }
 
-    return request.createResponse(QJsonRpcServicePrivate::convertReturnValue(returnValue));
+    return request.createResponse(QJsonChannelServicePrivate::convertReturnValue(returnValue));
 }

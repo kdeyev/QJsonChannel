@@ -6,15 +6,15 @@ Overview
 QJsonChannel is a Qt implementation of the JSON-RPC protocol, which mimics to the functionality provided by QtWebChannel.
 Like QtWebChannel, QJsonChannel is leveraging Qt's meta-object system for method invocation. But unlike QtWebChannel is utilizing the idea of uni-directional communication. The project was started as a try to build an analog of QtWebChannel more suitable for stateless services.
 
-|                           | QtWebChannel          | QJsonChannel          |
-|---                        |---                    |---                    |
-| RPC protocol              | Internal JSON-based   | JSON-RPC 2.0          |
-| Communication protocol    | uni-directional       | bi-directional        |
-| Stateless communication   | -                     |  +                    |
-| Server->Client call       | +                     |  -                    |
-| WebSocket support         | +                     |  +                    |
-| HTTP support              | -                     |  +                    |
-| Services list             | Internal representation | JSON Schema Service Descriptor |
+|                           | QtWebChannel              | QJsonChannel                  |
+|---                        |---                        |---                            |
+| RPC protocol              | Internal JSON-based       | JSON-RPC 2.0                  |
+| Communication protocol    | uni-directional           | bi-directional                |
+| Stateless communication   | -                         |  +                            |
+| Server->Client call       | +                         |  -                            |
+| WebSocket support         | +                         |  +                            |
+| HTTP support              | -                         |  +                            |
+| Services list             | Internal representation   | JSON Schema Service Descriptor|
 
 Libraries
 --------

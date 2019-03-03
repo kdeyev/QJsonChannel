@@ -1,21 +1,4 @@
-/*
- * Copyright (C) 2012-2013 Matt Broadstone
- * Contact: http://bitbucket.org/devonit/qjsonrpc
- *
- * This file is part of the QJsonRpc Library.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- */
-#ifndef QJSONRPCMESSAGE_H
-#define QJSONRPCMESSAGE_H
+#pragma once
 
 #include <QSharedDataPointer>
 #include <QMetaType>
@@ -26,16 +9,16 @@
 
 #include "QJsonChannelGlobal.h"
 
-class QJsonRpcMessagePrivate;
-class QJSONCHANNEL_EXPORT QJsonRpcMessage
+class QJsonChannelMessagePrivate;
+class QJSONCHANNEL_EXPORT QJsonChannelMessage
 {
 public:
-    QJsonRpcMessage();
-    QJsonRpcMessage(const QJsonRpcMessage &other);
-    QJsonRpcMessage &operator=(const QJsonRpcMessage &other);
-    ~QJsonRpcMessage();
+    QJsonChannelMessage();
+    QJsonChannelMessage(const QJsonChannelMessage &other);
+    QJsonChannelMessage &operator=(const QJsonChannelMessage &other);
+    ~QJsonChannelMessage();
 
-    inline void swap(QJsonRpcMessage &other) { qSwap(d, other.d); }
+    inline void swap(QJsonChannelMessage &other) { qSwap(d, other.d); }
 
     enum Type {
         Invalid,
@@ -46,23 +29,23 @@ public:
 		Init
     };
 
-    static QJsonRpcMessage createRequest(const QString &method,
+    static QJsonChannelMessage createRequest(const QString &method,
                                          const QJsonArray &params = QJsonArray());
-    static QJsonRpcMessage createRequest(const QString &method, const QJsonValue &param);
-    static QJsonRpcMessage createRequest(const QString &method, const QJsonObject &namedParameters);
+    static QJsonChannelMessage createRequest(const QString &method, const QJsonValue &param);
+    static QJsonChannelMessage createRequest(const QString &method, const QJsonObject &namedParameters);
 
-    static QJsonRpcMessage createNotification(const QString &method,
+    static QJsonChannelMessage createNotification(const QString &method,
                                               const QJsonArray &params = QJsonArray());
-    static QJsonRpcMessage createNotification(const QString &method, const QJsonValue &param);
-    static QJsonRpcMessage createNotification(const QString &method,
+    static QJsonChannelMessage createNotification(const QString &method, const QJsonValue &param);
+    static QJsonChannelMessage createNotification(const QString &method,
                                               const QJsonObject &namedParameters);
 
-    QJsonRpcMessage createResponse(const QJsonValue &result) const;
-    QJsonRpcMessage createErrorResponse(QJsonRpc::ErrorCode code,
+    QJsonChannelMessage createResponse(const QJsonValue &result) const;
+    QJsonChannelMessage createErrorResponse(QJsonChannel::ErrorCode code,
                                         const QString &message = QString(),
                                         const QJsonValue &data = QJsonValue()) const;
 
-    QJsonRpcMessage::Type type() const;
+    QJsonChannelMessage::Type type() const;
     bool isValid() const;
     int id() const;
 
@@ -79,21 +62,19 @@ public:
     QJsonValue errorData() const;
 
     QJsonObject toObject() const;
-    static QJsonRpcMessage fromObject(const QJsonObject &object);
+    static QJsonChannelMessage fromObject(const QJsonObject &object);
 
     QByteArray toJson() const;
-    static QJsonRpcMessage fromJson(const QByteArray &data);
+    static QJsonChannelMessage fromJson(const QByteArray &data);
 
-    bool operator==(const QJsonRpcMessage &message) const;
-    inline bool operator!=(const QJsonRpcMessage &message) const { return !(operator==(message)); }
+    bool operator==(const QJsonChannelMessage &message) const;
+    inline bool operator!=(const QJsonChannelMessage &message) const { return !(operator==(message)); }
 
 private:
-    friend class QJsonRpcMessagePrivate;
-    QSharedDataPointer<QJsonRpcMessagePrivate> d;
+    friend class QJsonChannelMessagePrivate;
+    QSharedDataPointer<QJsonChannelMessagePrivate> d;
 };
 
-QJSONCHANNEL_EXPORT QDebug operator<<(QDebug, const QJsonRpcMessage &);
-Q_DECLARE_METATYPE(QJsonRpcMessage)
-Q_DECLARE_SHARED(QJsonRpcMessage)
-
-#endif
+QJSONCHANNEL_EXPORT QDebug operator<<(QDebug, const QJsonChannelMessage &);
+Q_DECLARE_METATYPE(QJsonChannelMessage)
+Q_DECLARE_SHARED(QJsonChannelMessage)

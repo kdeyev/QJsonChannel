@@ -10,5 +10,5 @@ public:
 	QJsonChannelTufao();
 
 	Tufao::HttpServer _httpServer;
-	QJsonRpcServiceProvider _serviceRepository;
+	QJsonChannelServiceProvider _serviceRepository;
 };

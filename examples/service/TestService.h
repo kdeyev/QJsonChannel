@@ -15,7 +15,4 @@ public Q_SLOTS:
     void testMethodWithVariantParams(const QString &first, bool second, double third, const QVariant &fourth);
     QString testMethodWithParamsAndReturnValue(const QString &name);
     void testMethodWithDefaultParameter(const QString &first, const QString &second = QString());
-
-    QString immediateResponse();
-    QString longTaskWithImmediateResponse();
 };

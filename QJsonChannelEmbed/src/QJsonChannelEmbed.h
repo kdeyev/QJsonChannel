@@ -13,7 +13,7 @@ public:
 	~QJsonChannelEmbed();
 
 	QWebChannel _channel; 
-	QJsonRpcServiceProvider _serviceRepository;
+	QJsonChannelServiceProvider _serviceRepository;
 private:
 	QJsonChannelEmbedImpl* _impl = nullptr;
 };
