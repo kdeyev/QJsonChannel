@@ -32,7 +32,7 @@ References
 - [QJsonRpc](https://bitbucket.org/devonit/qjsonrpc)
 - [TUFÃO](http://vinipsmaker.github.io/tufao/)
 - [simple-jsonrpc-js](https://github.com/jershell/simple-jsonrpc-js) - Simple JSON-RPC javascript library. Generate and parse json rpc messages
-- [jsonrpc.py])(https://www.simple-is-better.org/rpc/jsonrpc.py) - Simple Python JSON-RPC client supports client side stubs
+- [jsonrpc.py](https://www.simple-is-better.org/rpc/jsonrpc.py) - Simple Python JSON-RPC client supports client side stubs
 - [JSON](http://www.json.org/) is a lightweight data interchange format.
 - [JSON-RPC](http://jsonrpc.org/) is lightweight remote procedure call protocol similar to XML-RPC.
 - [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html)
@@ -108,7 +108,7 @@ Building
 * (C++) [test-embed-qjsonchannel](https://github.com/kdeyev/QJsonChannel/blob/master/examples/test-embed-qjsonchannel/src/main.cpp) illustrates the same idea as test-embed-qtwebchannel but uses QJsonChannel "instead of" QtWebChannel.
     Actually I have difficulties with the internal web channel transport access.
     So, currently I'm using the QtWebChannel for message passing, bot the service invocation is done using QSsonChannel.
-    
+
 * for any QtWebChannel example need to require to place a list of resources near your executable file:
     - qt.conf
     - QtWebEngineProcess
