@@ -5,14 +5,14 @@
 //#include "QJsonChannelTufao_export.h"
 
 
-class QJsonChannelEmbed;
+class QJsonChannelEmbedImpl;
 class QJsonChannelEmbedAdapter : public QObject {
-	Q_OBJECT
-		friend QJsonChannelEmbed;
+Q_OBJECT
+	friend QJsonChannelEmbedImpl;
 private:
 	QJsonChannelEmbedAdapter(QJsonChannelServiceProvider* serviceRepository) : _serviceRepository(serviceRepository) {}
-	public Q_SLOTS :
-		QByteArray invokeJsonRPC(const QByteArray& jsonRpc);
+public Q_SLOTS :
+	QByteArray invokeJsonRPC(const QByteArray& jsonRpc);
 private:
 	QJsonChannelServiceProvider* _serviceRepository = nullptr;
 };

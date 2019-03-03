@@ -4,18 +4,16 @@
 
 class QJsonChannelEmbedImpl {
 public:
-	QJsonChannelEmbedAdapter* _adapter;
+ 	QJsonChannelEmbedImpl(QJsonChannelServiceProvider* serviceRepository) 
+	 : _adapter (new QJsonChannelEmbedAdapter(serviceRepository)) {
+	 }
+	std::unique_ptr<QJsonChannelEmbedAdapter> _adapter;
 };
 
-QJsonChannelEmbed::QJsonChannelEmbed() {
-	_impl = new QJsonChannelEmbedImpl();
-	_impl->_adapter = new QJsonChannelEmbedAdapter(&_serviceRepository);
-
-  _channel.registerObject("jsonRPC", _impl->_adapter);
+QJsonChannelEmbed::QJsonChannelEmbed() : _impl(new QJsonChannelEmbedImpl(&_serviceRepository)){
+	_channel.registerObject("jsonRPC", _impl->_adapter.get());
 }
 
-QJsonChannelEmbed::~QJsonChannelEmbed() { 
-	//_channel.deregisterObject(_impl->_adapter);
-	delete _impl->_adapter;
+QJsonChannelEmbed::~QJsonChannelEmbed() {
 	delete _impl;
 }

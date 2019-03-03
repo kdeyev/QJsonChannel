@@ -20,6 +20,7 @@ Libraries
 --------
 * QJsonChannel - RPC layer based on top of Qt meta objects invocation
 * QJsonChannelEmbed - the library utilizes QtWebChannel internal transport for passing messages to QJsonChannel RPC layer
+* QJsonChannelBeast - the library utilizes Boost.Beast library for WebSocket and HTTP transport over QJsonChannel RPC layer
 * QJsonChannelTufao - the library utilizes Tufao library for WebSocket and HTTP transport over QJsonChannel RPC layer
 * qjsonchannel.js - JavaScript layer over simple-jsonrpc-js which uses the JSON Schema Service Descriptor for building JS stubs on client side. 
 
@@ -30,6 +31,7 @@ Examples
 References
 ==========
 - [QJsonRpc](https://bitbucket.org/devonit/qjsonrpc)
+- [boost.beast](https://github.com/boostorg/beast)
 - [TUFÃO](http://vinipsmaker.github.io/tufao/)
 - [simple-jsonrpc-js](https://github.com/jershell/simple-jsonrpc-js) - Simple JSON-RPC javascript library. Generate and parse json rpc messages
 - [jsonrpc.py](https://www.simple-is-better.org/rpc/jsonrpc.py) - Simple Python JSON-RPC client supports client side stubs
@@ -73,6 +75,13 @@ Building
     - cmake -G "Visual Studio 15 2017 Win64" ..
     - cmake --build . --target install
 
+* build QJsonChannelBeast library: 
+    - cd QJsonChannelBeast
+    - mkdir build
+    - cd build
+    - cmake -G "Visual Studio 15 2017 Win64" ..
+    - cmake --build . --target install
+
 * build QJsonChannelEmbed library: 
     - cd QJsonChannelEmbed
     - mkdir build
@@ -96,7 +105,14 @@ Building
 * (Python) [testqjsonrpc_http.py](https://github.com/kdeyev/QJsonChannel/blob/master/python/testqjsonrpc_http.py) Example shows access to JSON-RPC server using HTTP transport
 * (Python) [testqjsonrpc_websocket.py](https://github.com/kdeyev/QJsonChannel/blob/master/python/testqjsonrpc_websocket.py) EExample shows access to JSON-RPC server using WebSocket transport
 * (Python) [testqjsonrpc_requests.py](https://github.com/kdeyev/QJsonChannel/blob/master/python/testqjsonrpc_requests.py) Example shows access to JSON-RPC server using HTTP transport and client side stubs
-* (C++) [test-tufao-server](https://github.com/kdeyev/QJsonChannel/blob/master/examples/test-tufao-server/src/main.cpp) illustrates the access to JSON-RPC services using QJsonChannel and tufao HTTP server:
+* (C++) [test-tufao-server](https://github.com/kdeyev/QJsonChannel/blob/master/examples/test-tufao-server/src/main.cpp) illustrates the access to JSON-RPC services using QJsonChannel and HTTP/WebSocket tufao server:
+    - run test-tufao-server
+    - run one of:
+        - chrome javascript/examples/http/index.html
+        - chrome javascript/examples/rpc-http/index.html
+        - python python/testqjsonrpc_http.py
+        - python python/testqjsonrpc_requests.py
+* (C++) [test-beast-server](https://github.com/kdeyev/QJsonChannel/blob/master/examples/test-beast-server/src/main.cpp) illustrates the access to JSON-RPC services using QJsonChannel and HTTP/WebSocket Boost.Beast server:
     - run test-tufao-server
     - run one of:
         - chrome javascript/examples/http/index.html

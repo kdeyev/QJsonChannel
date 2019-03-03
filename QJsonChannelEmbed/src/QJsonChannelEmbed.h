@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <QWebChannel>
 #include <QJsonChannelServiceProvider.h>
 #include "qjsonchannelembed_export.h"
@@ -15,5 +17,5 @@ public:
 	QWebChannel _channel; 
 	QJsonChannelServiceProvider _serviceRepository;
 private:
-	QJsonChannelEmbedImpl* _impl = nullptr;
+	QJsonChannelEmbedImpl* _impl;
 };
