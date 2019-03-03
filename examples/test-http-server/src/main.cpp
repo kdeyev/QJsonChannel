@@ -20,23 +20,19 @@
   SOFTWARE.
 */
 
-#include <iostream>
 #include <QtCore/QCoreApplication>
-#include <QtCore/QUrl>
-
+#include <QJsonChannelService.h>
 #include <QJsonChannelTufaoHttp.h>
 #include <testservice.h>
 
-
-
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+  QCoreApplication a(argc, argv);
 
 	QJsonChannelTufaoHttp server;
 
 	server._serviceRepository.addService(new QJsonRpcService("agent", new TestService));
-    server._httpServer.listen(QHostAddress::Any, 5555);
+  server._httpServer.listen(QHostAddress::Any, 5555);
 
-    return a.exec();
+  return a.exec();
 }

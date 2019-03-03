@@ -13,14 +13,14 @@ var RpcWebChannel = function(jrpc, initCallback)
         //document.getElementsByClassName('paragraph')[0].innerHTML += '__init__ result: ' + JSON.stringify(result) + '<br>';
         for (let key in result) {
             let service = result[key];
-            rpcChannel.services[key] = new QObject(key, service, jrpc);
+            rpcChannel.services[key] = new JsonChannelObject(key, service, jrpc);
         }
 
         initCallback(rpcChannel.services);
     });
 };
 
-function QObject(name, data, jrpc)
+function JsonChannelObject(name, data, jrpc)
 {
     this.__id__ = name;
     //webChannel.objects[name] = this;
@@ -33,18 +33,18 @@ function QObject(name, data, jrpc)
     // ----------------------------------------------------------------------
 
     /*
-    this.unwrapQObject = function(response)
+    this.unwrapJsonChannelObject = function(response)
     {
         if (response instanceof Array) {
             // support list of objects
             var ret = new Array(response.length);
             for (var i = 0; i < response.length; ++i) {
-                ret[i] = object.unwrapQObject(response[i]);
+                ret[i] = object.unwrapJsonChannelObject(response[i]);
             }
             return ret;
         }
         //if (!response
-        //    || !response["__QObject*__"]
+        //    || !response["__JsonChannelObject*__"]
         //    || response.id === undefined) {
         //    return response;
         //}
@@ -54,36 +54,36 @@ function QObject(name, data, jrpc)
         //    return webChannel.objects[objectId];
 
         if (!response.data) {
-            console.error("Cannot unwrap unknown QObject " + objectId + " without data.");
+            console.error("Cannot unwrap unknown JsonChannelObject " + objectId + " without data.");
             return;
         }
 
-        var qObject = new QObject( objectId, response.data, webChannel );
-        qObject.destroyed.connect(function() {
-            if (webChannel.objects[objectId] === qObject) {
+        var JsonChannelObject = new JsonChannelObject( objectId, response.data, webChannel );
+        JsonChannelObject.destroyed.connect(function() {
+            if (webChannel.objects[objectId] === JsonChannelObject) {
                 delete webChannel.objects[objectId];
-                // reset the now deleted QObject to an empty {} object
+                // reset the now deleted JsonChannelObject to an empty {} object
                 // just assigning {} though would not have the desired effect, but the
                 // below also ensures all external references will see the empty map
                 // NOTE: this detour is necessary to workaround QTBUG-40021
                 var propertyNames = [];
-                for (var propertyName in qObject) {
+                for (var propertyName in JsonChannelObject) {
                     propertyNames.push(propertyName);
                 }
                 for (var idx in propertyNames) {
-                    delete qObject[propertyNames[idx]];
+                    delete JsonChannelObject[propertyNames[idx]];
                 }
             }
         });
         // here we are already initialized, and thus must directly unwrap the properties
-        qObject.unwrapProperties();
-        return qObject;
+        JsonChannelObject.unwrapProperties();
+        return JsonChannelObject;
     }
 
     this.unwrapProperties = function()
     {
         for (var propertyIdx in object.__propertyCache__) {
-            object.__propertyCache__[propertyIdx] = object.unwrapQObject(object.__propertyCache__[propertyIdx]);
+            object.__propertyCache__[propertyIdx] = object.unwrapJsonChannelObject(object.__propertyCache__[propertyIdx]);
         }
     }
     */
@@ -115,7 +115,7 @@ function QObject(name, data, jrpc)
         var notifySignalData = propertyInfo[2];
         // initialize property cache with current value
         // NOTE: if this is an object, it is not directly unwrapped as it might
-        // reference other QObject that we do not know yet
+        // reference other JsonChannelObject that we do not know yet
         object.__propertyCache__[propertyIndex] = propertyInfo[3];
 
         if (notifySignalData) {

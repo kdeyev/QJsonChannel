@@ -50,3 +50,7 @@
         - qtwebengine_resources_200p.pak        from Qt/resources
         - qtwebengine_locales                   from Qt/translations/qtwebengine_locales
             -   many files 
+
+    use chrome http://localhost:9090 for debugging
+
+    

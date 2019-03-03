@@ -1,0 +1,22 @@
+#include <QApplication>
+#include <QWebEngineView>
+#include "testservice.h"
+
+#include <QJsonChannelService.h>
+#include <QJsonChannelEmbed.h>
+
+int main(int argc, char *argv[])
+{
+    qputenv ("QTWEBENGINE_REMOTE_DEBUGGING", "9090");
+    QApplication app(argc, argv);
+
+	QJsonChannelEmbed channel;
+    channel._serviceRepository.addService(new QJsonRpcService("agent", new TestService));
+
+    QWebEngineView webView;
+    webView.page ()->setWebChannel(&channel._channel);
+    webView.load (QUrl ("qrc:///resources/index.html"));
+    webView.show();
+
+    return app.exec();
+}

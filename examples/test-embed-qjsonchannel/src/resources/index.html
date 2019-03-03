@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Rpc example</title>
+    <script type="application/javascript" src="qrc:///resources/qjsonchannel/simple-jsonrpc-js/simple-jsonrpc-js.js"></script>
+    <script type="application/javascript" src="qrc:///resources/qjsonchannel/qjsonchannel.js"></script>
+    <script type="text/javascript" src="qrc:///resources/qwebchannel.js"></script>
+</head>
+
+<body>
+<h1 class="title"></h1>
+<p class="paragraph"></p>
+<script>
+        new QWebChannel(qt.webChannelTransport, function(channel) {
+            
+            //configure
+            var jrpc = new simple_jsonrpc();
+
+            jrpc.toStream = function(_msg) {
+                channel.objects.jsonRPC.invokeJsonRPC(_msg).then((response) => {
+                    jrpc.messageHandler(response);
+                });
+            };
+
+
+            new RpcWebChannel(jrpc, function(services) {
+                services.agent.testMethod().then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethod result: ' + result + '<br>';
+                });
+
+                services.agent.testMethodWithParams("one", false, 10).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParams result: ' + result + '<br>';
+                });
+
+                services.agent.testMethodWithParamsAndReturnValue ("kostya").then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
+                });
+            });
+        });
+</script>
+</body>
+
+</html>
