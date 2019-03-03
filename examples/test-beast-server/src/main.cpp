@@ -176,26 +176,44 @@ handle_request(
         return res;
     };
 
-    // Make sure we can handle the method
-    if( req.method() != http::verb::post)
-        return send(bad_request("Unknown HTTP-method"));
+	if (req.method() == http::verb::options) {
+		http::response<http::string_body> res{ http::status::ok, req.version() };
+		res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
 
+		res.set(http::field::access_control_allow_origin, "*");
+		res.set(http::field::access_control_allow_methods, "POST");
+		res.set(http::field::access_control_allow_headers, "accept, content-type");
+		res.set(http::field::allow, "POST");
+		return send(std::move(res));
+	}
 
-	QJsonChannelMessage request = QJsonChannelMessage::fromJson(QByteArray::fromStdString(std::move(req.body())));
+	// Make sure we can handle the method
+	if (req.method() != http::verb::post)
+		return send(bad_request("Unknown HTTP-method"));
+
+	// no deep copy here
+	QByteArray b = QByteArray::fromRawData(req.body().c_str(), req.body().size());
+
+	QJsonChannelMessage request = QJsonChannelMessage::fromJson(std::move(b));
 	QJsonChannelMessage response = serviceRepository->processMessage(request);
+
+	// no copy by return value
 	QByteArray body = response.toJson();
 
-    // Respond to GET request
-    http::response<http::string_body> res{
-        std::piecewise_construct,
-        std::make_tuple(std::move(body)),
-        std::make_tuple(http::status::ok, req.version())};
+	http::response<http::buffer_body> res{http::status::ok, req.version()};
+	res.body().data = body.data();
+	res.body().size = body.size();
+	res.body().more = false;
 
+	res.set(http::field::access_control_allow_origin, "*");
+	res.set(http::field::access_control_allow_methods, "POST");
+	res.set(http::field::access_control_allow_headers, "accept, content-type");
 
     res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set(http::field::content_type, "application/json");
     res.content_length(body.size());
-    res.keep_alive(req.keep_alive());
+    //res.keep_alive(req.keep_alive());
+	res.prepare_payload();
     return send(std::move(res));
 }
 
