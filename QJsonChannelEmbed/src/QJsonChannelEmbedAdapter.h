@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <QJsonChannelServiceProvider.h>
-//#include "qjsonchanneltufaohttp_export.h"
+//#include "QJsonChannelTufao_export.h"
 
 
 class QJsonChannelEmbed;

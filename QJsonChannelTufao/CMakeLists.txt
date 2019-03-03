@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(QJsonChannelTufaoHttp VERSION 1.0)
+project(QJsonChannelTufao VERSION 1.0)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Network REQUIRED)
@@ -29,7 +29,7 @@ qt5_use_modules(${PROJECT_NAME} Network)
 target_link_libraries(${PROJECT_NAME} QJsonChannel tufao1d)
 
 install(FILES ${INCLUDE_FILES} DESTINATION "include/${PROJECT_NAME}")
-install(FILES build/qjsonchanneltufaohttp_export.h DESTINATION "include/${PROJECT_NAME}")
+install(FILES build/QJsonChannelTufao_export.h DESTINATION "include/${PROJECT_NAME}")
 install(
     TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION lib

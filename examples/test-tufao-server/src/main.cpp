@@ -22,14 +22,14 @@
 
 #include <QtCore/QCoreApplication>
 #include <QJsonChannelService.h>
-#include <QJsonChannelTufaoHttp.h>
+#include <QJsonChannelTufao.h>
 #include "TestService.h"
 
 int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
 
-	QJsonChannelTufaoHttp server;
+	QJsonChannelTufao server;
 
 	server._serviceRepository.addService(new QJsonRpcService("agent", new TestService));
   server._httpServer.listen(QHostAddress::Any, 5555);
