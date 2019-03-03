@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/web-ui-main">
+        <file>resources/index.html</file>
+        <file>resources/qwebchannel.js</file>
+    </qresource>
+</RCC>

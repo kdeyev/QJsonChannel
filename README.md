@@ -29,3 +29,25 @@
     - cd build
     - cmake -G "Visual Studio 15 2017 Win64" ..
     - cmake --build . --target install
+
+## Examples
+* for test-http-server:
+    - run test_http_server
+    - run one of:
+        - chrome javascript/examples/http/index.html
+        - chrome javascript/examples/rpc-http/index.html
+        - python python/testqjsonrpc_http.py
+        - python python/testqjsonrpc_requests.py
+
+
+* all qt web channel examples require to copy near your executable file:
+    - qt.conf
+    - QtWebEngineProcess
+        - QtWebEngineProcessd.exe
+        - icudtl.dat from Qt/resources
+        - qtwebengine_devtools_resources.pak from Qt/resources
+        - qtwebengine_resources.pak from Qt/resources
+        - qtwebengine_resources_100p.pak from Qt/resources
+        - qtwebengine_resources_200p.pak from Qt/resources
+        - qtwebengine_locales from Qt/translations/qtwebengine_locales
+            -   many files from 
