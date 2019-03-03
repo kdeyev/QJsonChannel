@@ -23,7 +23,7 @@
 #include <QtCore/QCoreApplication>
 #include <QJsonChannelService.h>
 #include <QJsonChannelTufaoHttp.h>
-#include <testservice.h>
+#include "TestService.h"
 
 int main(int argc, char *argv[])
 {

@@ -23,6 +23,13 @@
     - cmake -G "Visual Studio 15 2017 Win64" ..
     - cmake --build . --target install
 
+* build QJsonChannelEmbed library: 
+    - cd QJsonChannelEmbed
+    - mkdir build
+    - cd build
+    - cmake -G "Visual Studio 15 2017 Win64" ..
+    - cmake --build . --target install
+
 * build examples library: 
     - cd examples
     - mkdir build
@@ -31,7 +38,7 @@
     - cmake --build . --target install
 
 ## Examples
-* for test-http-server:
+* test-http-server illustrates the access to JSON-RPC services using QJsonChannel and tufao HTTP server:
     - run test_http_server
     - run one of:
         - chrome javascript/examples/http/index.html
@@ -39,7 +46,14 @@
         - python python/testqjsonrpc_http.py
         - python python/testqjsonrpc_requests.py
 
-* for any qtWebChannel example need to require to place a list of resources near your executable file:
+* The test-embed-qtwebchannel illustrates the hybrid application build on top of QtWebChannel. 
+    The test includes the logic of both sides frontend and backend. The communication is built using internal webchannel transport.
+    
+* The test-embed-qjsonchannel illustrates the same idea as test-embed-qtwebchannel but uses QJsonChannel "instead of" QtWebChannel.
+    Actually I have difficulties with the internal web channel transport access.
+    So, currently I'm using the QtWebChannel for message passing, bot the service invocation is done using QSsonChannel.
+
+* for any QtWebChannel example need to require to place a list of resources near your executable file:
     - qt.conf
     - QtWebEngineProcess
         - QtWebEngineProcess executable         from Qt/bin

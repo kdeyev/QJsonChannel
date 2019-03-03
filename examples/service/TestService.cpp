@@ -20,7 +20,7 @@
 #include <QThreadPool>
 #include <QRunnable>
 
-#include "testservice.h"
+#include "TestService.h"
 
 TestService::TestService(QObject *parent)
     : QObject(parent)

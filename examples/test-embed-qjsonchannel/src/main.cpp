@@ -1,9 +1,10 @@
 #include <QApplication>
 #include <QWebEngineView>
-#include "testservice.h"
 
 #include <QJsonChannelService.h>
 #include <QJsonChannelEmbed.h>
+
+#include "TestService.h"
 
 int main(int argc, char *argv[])
 {

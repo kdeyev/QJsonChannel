@@ -2,11 +2,11 @@
 
 #include <QWebChannel>
 #include <QJsonChannelServiceProvider.h>
-//#include "qjsonchanneltufaohttp_export.h"
+#include "qjsonchannelembed_export.h"
 
 class QJsonChannelEmbedImpl;
 
-class /*QJSONCHANNELTUFAOHTTP_EXPORT*/ QJsonChannelEmbed 
+class QJSONCHANNELEMBED_EXPORT QJsonChannelEmbed 
 {
 public:
 	QJsonChannelEmbed();

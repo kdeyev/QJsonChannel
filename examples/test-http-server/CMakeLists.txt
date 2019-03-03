@@ -5,11 +5,12 @@ project(test_http_server VERSION 1.0)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Network REQUIRED)
 
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp)
+file(GLOB_RECURSE SOURCE_FILES src/*.cpp ../service/*.cpp)
 file(GLOB_RECURSE INCLUDE_FILES src/*.h)
 set(CMAKE_AUTOMOC ON) # For meta object compiler
 
 include_directories(src)
+include_directories(../service)
 include_directories(../../QJsonChannel/install/include/QJsonChannel)
 include_directories(../../tufao/install/include/tufao-1/Tufao)
 include_directories(../../QJsonChannelTufaoHttp/install/include/QJsonChannelTufaoHttp)

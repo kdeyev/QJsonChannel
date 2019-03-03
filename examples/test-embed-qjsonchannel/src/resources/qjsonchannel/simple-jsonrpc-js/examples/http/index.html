@@ -20,7 +20,6 @@
                 if (this.readyState != 4) return;
 
                 try {
-                    JSON.parse(this.responseText);
                     jrpc.messageHandler(this.responseText);
                 }
                 catch (e){

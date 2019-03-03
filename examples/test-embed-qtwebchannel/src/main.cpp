@@ -1,7 +1,8 @@
 #include <QApplication>
 #include <QWebChannel>
 #include <QWebEngineView>
-#include "testservice.h"
+
+#include "TestService.h"
 
 int main(int argc, char *argv[])
 {
