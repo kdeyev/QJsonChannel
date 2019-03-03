@@ -17,6 +17,7 @@ include_directories(src)
 include_directories(../service)
 include_directories(../../QJsonChannel/install/include/QJsonChannel)
 link_directories(../../QJsonChannel/install/lib)
+link_directories(${Boost_LIBRARY_DIRS})
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
 

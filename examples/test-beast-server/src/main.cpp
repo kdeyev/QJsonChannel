@@ -159,7 +159,7 @@ template<
     class Send>
 void
 handle_request(
-	QJsonRpcServiceProvider* serviceRepository,
+	QJsonChannelServiceProvider* serviceRepository,
     http::request<Body, http::basic_fields<Allocator>>&& req,
     Send&& send)
 {
@@ -181,8 +181,8 @@ handle_request(
         return send(bad_request("Unknown HTTP-method"));
 
 
-	QJsonRpcMessage request = QJsonRpcMessage::fromJson(QByteArray::fromStdString(std::move(req.body())));
-	QJsonRpcMessage response = serviceRepository->processMessage(request);
+	QJsonChannelMessage request = QJsonChannelMessage::fromJson(QByteArray::fromStdString(std::move(req.body())));
+	QJsonChannelMessage response = serviceRepository->processMessage(request);
 	QByteArray body = response.toJson();
 
     // Respond to GET request
@@ -547,7 +547,7 @@ class http_session : public std::enable_shared_from_this<http_session>
         boost::asio::io_context::executor_type> strand_;
     boost::asio::steady_timer timer_;
     boost::beast::flat_buffer buffer_;
-	QJsonRpcServiceProvider* serviceRepository_;
+	QJsonChannelServiceProvider* serviceRepository_;
     http::request<http::string_body> req_;
     queue queue_;
 
@@ -556,7 +556,7 @@ public:
     explicit
     http_session(
         tcp::socket socket,
-		QJsonRpcServiceProvider* serviceRepository_)
+		QJsonChannelServiceProvider* serviceRepository_)
         : socket_(std::move(socket))
         , strand_(socket_.get_executor())
         , timer_(socket_.get_executor().context(),
@@ -715,13 +715,13 @@ class listener : public std::enable_shared_from_this<listener>
 {
     tcp::acceptor acceptor_;
     tcp::socket socket_;
-	QJsonRpcServiceProvider* serviceRepository_;
+	QJsonChannelServiceProvider* serviceRepository_;
 
 public:
     listener(
         boost::asio::io_context& ioc,
         tcp::endpoint endpoint,
-		QJsonRpcServiceProvider* serviceRepository)
+		QJsonChannelServiceProvider* serviceRepository)
         : acceptor_(ioc)
         , socket_(ioc)
         , serviceRepository_(serviceRepository)
@@ -807,8 +807,8 @@ public:
 
 int main(int argc, char* argv[])
 {
-	QJsonRpcServiceProvider serviceRepository;
-	serviceRepository.addService(new QJsonRpcService("agent", new TestService));
+	QJsonChannelServiceProvider serviceRepository;
+	serviceRepository.addService(new QJsonChannelService("agent", new TestService));
 
 	auto const threads = 1;
 
