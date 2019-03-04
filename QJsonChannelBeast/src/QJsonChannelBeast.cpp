@@ -111,15 +111,16 @@ class websocket_session : public std::enable_shared_from_this<websocket_session>
     boost::asio::steady_timer timer_;
     boost::beast::multi_buffer buffer_;
     char ping_state_ = 0;
-
+	QJsonChannelServiceProvider* _serviceRepository;
 public:
     // Take ownership of the socket
     explicit
-    websocket_session(tcp::socket socket)
+    websocket_session(tcp::socket socket, QJsonChannelServiceProvider* serviceRepository)
         : ws_(std::move(socket))
         , strand_(ws_.get_executor())
         , timer_(ws_.get_executor().context(),
-            (std::chrono::steady_clock::time_point::max)())
+            (std::chrono::steady_clock::time_point::max)()),
+		_serviceRepository (serviceRepository)
     {
     }
 
@@ -302,11 +303,34 @@ public:
         if(ec)
             fail(ec, "read");
 
+		if (!ws_.got_text()) {
+			fail(ec, "not text");
+		}
+
         // Note that there is activity
         activity();
 
-        // Echo the message
-        ws_.text(ws_.got_text());
+		// no deep copy here
+		QByteArray body = QByteArray::fromRawData(boost::asio::buffer_cast<char const*>(boost::beast::buffers_front(buffer_.data())),
+			boost::asio::buffer_size(buffer_.data()));
+		//QByteArray b = QByteArray::fromStr(beast::buffers_to_string(b.data())
+
+		QJsonChannelMessage request = QJsonChannelMessage::fromJson(std::move(body));
+		QJsonChannelMessage response = _serviceRepository->processMessage(request);
+
+		// no copy by return value
+		body = response.toJson();
+
+		buffer_.consume(buffer_.size());
+
+		size_t n = buffer_copy(buffer_.prepare(body.size()), boost::asio::buffer(body.data(), body.size()));
+		if (n != body.size()) {
+			fail(ec, "wrong size");
+		}
+		buffer_.commit(n);
+
+        ws_.text(true);
+
         ws_.async_write(
             buffer_.data(),
             boost::asio::bind_executor(
@@ -554,7 +578,7 @@ public:
 
             // Create a WebSocket websocket_session by transferring the socket
             std::make_shared<websocket_session>(
-                std::move(socket_))->do_accept(std::move(req_));
+                std::move(socket_), serviceRepository_)->do_accept(std::move(req_));
             return;
         }
 
