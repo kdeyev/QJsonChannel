@@ -22,6 +22,7 @@ var RpcWebChannel = function(jrpc, initCallback)
 
 function JsonChannelObject(name, data, jrpc)
 {
+    this.__server_data__ = data
     this.__id__ = name;
     //webChannel.objects[name] = this;
 
