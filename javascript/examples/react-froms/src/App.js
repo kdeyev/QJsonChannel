@@ -106,7 +106,30 @@ class Editor extends Component {
 class Selector extends Component {
   constructor(props) {
     super(props);
-    this.state = { current: "Simple"};
+    this.state = { current: undefined, functions: [] };
+    this.load();
+  }
+
+  load = () => {
+    let selector = this;
+    jrpc.call("__init__").then((result) => {
+      log (result);
+
+      let functions = {};
+      for (let k in result) {
+        let obj = result[k];
+        for (let m in obj.methods) {
+          let method = obj.methods[m];
+          let name = k + " : " + m;
+          functions[name]  = {
+            "schema": method.params,
+            "UISchema": {},
+            "formData": {}
+          };
+        }
+      }
+      selector.setState({functions});
+    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -117,14 +140,14 @@ class Selector extends Component {
     return event => {
       event.preventDefault();
       this.setState({ current: label });
-      setImmediate(() => this.props.onSelected(samples[label]));
+      setImmediate(() => this.props.onSelected(this.state.functions[label]));
     };
   };
 
   render() {
     return (
       <ul className="nav nav-pills">
-        {Object.keys(samples).map((label, i) => {
+        {Object.keys(this.state.functions).map((label, i) => {
           return (
             <li
               key={i}
@@ -145,7 +168,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     // initialize state with Simple data sample
-    const { schema, uiSchema, formData, validate } = samples.Simple;
+    let schema = {};
+    let uiSchema = {};
+    let formData = {};
+    let validate = true;
     this.state = {
       form: false,
       schema,
@@ -160,7 +186,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.load(samples.Simple);
+    //this.load(samples.Simple);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
