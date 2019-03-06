@@ -8,7 +8,8 @@
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.8.4",
     "react-jsonschema-form": "^1.2.1",
-    "react-scripts": "2.1.5"
+    "react-scripts": "2.1.5",
+    "simple-jsonrpc-js": "0.0.10"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -3,6 +3,8 @@ import { UnControlled as CodeMirror } from "react-codemirror2";
 import Form from "react-jsonschema-form";
 import { shouldRender } from "../src/utils";
 
+import simple_jsonrpc from "simple-jsonrpc-js";
+
 import "codemirror/mode/javascript/javascript";
 
 import { samples } from "./samples";
@@ -29,6 +31,31 @@ const cmOptions = {
   indentWithTabs: false,
   tabSize: 2
 };
+
+
+var jrpc = new simple_jsonrpc();
+
+jrpc.toStream = function(_msg){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState != 4) return;
+
+        try {
+            jrpc.messageHandler(this.responseText);
+        }
+        catch (e){
+            console.error(e);
+        }
+    };
+
+    xhr.open("POST", 'http://localhost:5555', true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(_msg);
+};
+
+jrpc.call("__init__").then(function (result) {
+  log (result);
+});
 
 class Editor extends Component {
   constructor(props) {
