@@ -7,8 +7,6 @@ import simple_jsonrpc from "simple-jsonrpc-js";
 
 import "codemirror/mode/javascript/javascript";
 
-import { samples } from "./samples";
-
 // Import a few CodeMirror themes; these are used to match alternative
 // bootstrap ones.
 import "codemirror/lib/codemirror.css";
@@ -41,6 +39,10 @@ jrpc.toStream = function(_msg){
         if (this.readyState != 4) return;
 
         try {
+            let obj = JSON.parse(this.responseText);
+            if ("error" in obj) {
+              alert("Error: " + JSON.stringify(obj));
+            }
             jrpc.messageHandler(this.responseText);
         }
         catch (e){
@@ -52,10 +54,6 @@ jrpc.toStream = function(_msg){
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(_msg);
 };
-
-jrpc.call("__init__").then(function (result) {
-  log (result);
-});
 
 class Editor extends Component {
   constructor(props) {
@@ -120,7 +118,7 @@ class Selector extends Component {
         let obj = result[k];
         for (let m in obj.methods) {
           let method = obj.methods[m];
-          let name = k + " : " + m;
+          let name = k + "." + m;
           functions[name]  = {
             "schema": method.params,
             "UISchema": {},
@@ -140,7 +138,7 @@ class Selector extends Component {
     return event => {
       event.preventDefault();
       this.setState({ current: label });
-      setImmediate(() => this.props.onSelected(this.state.functions[label]));
+      setImmediate(() => this.props.onSelected(label, this.state.functions[label]));
     };
   };
 
@@ -173,6 +171,7 @@ class App extends Component {
     let formData = {};
     let validate = true;
     this.state = {
+      currentFunction: undefined,
       form: false,
       schema,
       uiSchema,
@@ -193,16 +192,20 @@ class App extends Component {
     return shouldRender(this, nextProps, nextState);
   }
 
-  load = data => {
+  load = (functionName, data) => {
     // Reset the ArrayFieldTemplate whenever you load new data
     const { ArrayFieldTemplate, ObjectFieldTemplate } = data;
     // uiSchema is missing on some examples. Provide a default to
     // clear the field in all cases.
     const { uiSchema = {} } = data;
+
+    this.setState({currentFunction: functionName});
+
     // force resetting form component instance
     this.setState({ form: false }, _ =>
       this.setState({
         ...data,
+        currentFunction: functionName,
         form: true,
         ArrayFieldTemplate,
         ObjectFieldTemplate,
@@ -222,6 +225,7 @@ class App extends Component {
 
   render() {
     const {
+      currentFunction,
       schema,
       uiSchema,
       formData,
@@ -277,8 +281,17 @@ class App extends Component {
               onSubmit={({ formData }, e) => {
                 console.log("submitted formData", formData);
                 console.log("submit event", e);
+
+                let params = [];
+                for (let k in formData) {
+                  params.push(formData[k]);
+                }
+                jrpc.call(currentFunction, params).then((result) => {
+                  log (result);
+                  alert("The " + currentFunction + " function response: " + result);
+                });
               }}
-              validate={validate}
+              validate={true}
               onBlur={(id, value) =>
                 console.log(`Touched ${id} with value ${value}`)
               }
