@@ -172,3 +172,5 @@ function JsonChannelObject(name, data, jrpc)
         object[name] = data.enums[name];
     }*/
 }
+
+export default RpcWebChannel;

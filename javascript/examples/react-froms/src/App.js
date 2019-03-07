@@ -39,9 +39,9 @@ jrpc.toStream = function(_msg){
         if (this.readyState != 4) return;
 
         try {
-            let obj = JSON.parse(this.responseText);
+            let obj = fromJson(this.responseText);
             if ("error" in obj) {
-              alert("Error: " + JSON.stringify(obj));
+              alert("Error: \n" + toJson(obj));
             }
             jrpc.messageHandler(this.responseText);
         }
@@ -111,7 +111,7 @@ class Selector extends Component {
   load = () => {
     let selector = this;
     jrpc.call("__init__").then((result) => {
-      log (result);
+      log (toJson(result));
 
       let functions = {};
       for (let k in result) {
@@ -230,7 +230,6 @@ class App extends Component {
       uiSchema,
       formData,
       liveSettings,
-      validate,
       ArrayFieldTemplate,
       ObjectFieldTemplate,
       transformErrors,
@@ -288,7 +287,7 @@ class App extends Component {
                 }
                 jrpc.call(currentFunction, params).then((result) => {
                   log (result);
-                  alert("The " + currentFunction + " function response: " + result);
+                  alert("The " + currentFunction + " function response: \n" + result);
                 });
               }}
               validate={true}
