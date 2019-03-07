@@ -6,18 +6,17 @@
 
 #include "TestService.h"
 
-int main(int argc, char *argv[])
-{
+int main (int argc, char* argv[]) {
     qputenv ("QTWEBENGINE_REMOTE_DEBUGGING", "9090");
-    QApplication app(argc, argv);
+    QApplication app (argc, argv);
 
-	QJsonChannelEmbed channel;
-    channel._serviceRepository.addService(new QJsonChannelService("agent", new TestService));
+    QJsonChannelEmbed channel;
+    channel._serviceRepository.addService (new QJsonChannelService ("agent", new TestService));
 
     QWebEngineView webView;
-    webView.page ()->setWebChannel(&channel._channel);
+    webView.page ()->setWebChannel (&channel._channel);
     webView.load (QUrl ("qrc:///index.html"));
-    webView.show();
+    webView.show ();
 
-    return app.exec();
+    return app.exec ();
 }

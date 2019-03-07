@@ -25,3 +25,9 @@ qt5_use_modules(${PROJECT_NAME} Core Network Widgets WebChannel WebEngineWidgets
 
 target_link_libraries(${PROJECT_NAME})
 
+install(
+    TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+)

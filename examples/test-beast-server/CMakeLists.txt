@@ -25,4 +25,9 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
 qt5_use_modules(${PROJECT_NAME} Core)
 
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} QJsonChannel QJsonChannelBeast)
-
+install(
+    TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+)

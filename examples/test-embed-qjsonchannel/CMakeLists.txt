@@ -26,4 +26,9 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES} ${QRCS})
 qt5_use_modules(${PROJECT_NAME} Core Widgets WebChannel WebEngineWidgets)
 
 target_link_libraries(${PROJECT_NAME} QJsonChannel QJsonChannelEmbed)
-
+install(
+    TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+)
