@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_INSTALL_PREFIX install)
 
+set(SERVICE_SRC_DIR ${PROJECT_SOURCE_DIR}/service PARENT_SCOPE)
+
 add_subdirectory(test-beast-server)
 add_subdirectory(test-tufao-server)
 add_subdirectory(test-embed-qtwebchannel)

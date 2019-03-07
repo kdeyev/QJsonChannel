@@ -7,17 +7,15 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5WebChannel REQUIRED)
 find_package(Qt5WebEngineWidgets REQUIRED)
 
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp ../service/*.cpp)
+file(GLOB_RECURSE SOURCE_FILES src/*.cpp ${SERVICE_SRC_DIR}/*.cpp)
 file(GLOB_RECURSE INCLUDE_FILES src/*.h)
 set(CMAKE_AUTOMOC ON) # For meta object compiler
 set(CMAKE_AUTORCC ON) 
 
 include_directories(src)
-include_directories(../service)
-include_directories(../../QJsonChannel/install/include/QJsonChannel)
-include_directories(../../QJsonChannelEmbed/install/include/QJsonChannelEmbed)
-link_directories(../../QJsonChannel/install/lib)
-link_directories(../../QJsonChannelEmbed/install/lib)
+include_directories(${SERVICE_SRC_DIR})
+include_directories(${QJsonChannel_INCLUDE_DIR})
+include_directories(${QJsonChannelEmbed_INCLUDE_DIR})
 
 qt5_add_resources(QRCS src/resources.qrc)
 

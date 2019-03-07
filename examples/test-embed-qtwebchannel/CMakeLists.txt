@@ -9,13 +9,13 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5WebChannel REQUIRED)
 find_package(Qt5WebEngineWidgets REQUIRED)
 
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp ../service/*.cpp)
+file(GLOB_RECURSE SOURCE_FILES src/*.cpp ${SERVICE_SRC_DIR}/*.cpp)
 file(GLOB_RECURSE INCLUDE_FILES src/*.h)
 set(CMAKE_AUTOMOC ON) # For meta object compiler
 set(CMAKE_AUTORCC ON) 
 
 include_directories(src)
-include_directories(../service)
+include_directories(${SERVICE_SRC_DIR})
 
 qt5_add_resources(QRCS src/resources.qrc)
 

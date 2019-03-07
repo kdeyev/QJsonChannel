@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QScopedPointer>
+
 #include "QJsonChannelGlobal.h"
 
 class QJsonChannelMessage;
