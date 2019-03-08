@@ -2,7 +2,7 @@
 
 The example illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Boost.Beast server.
 
-- run test-beast-server
+- run beast-server
 - run any of [client-side examples]()
 
 # References

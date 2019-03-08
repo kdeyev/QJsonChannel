@@ -2,5 +2,5 @@
 
 The example illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Tufao server.
 
-- run test-tufao-server
+- run tufao-server
 - run any of [client-side examples]()
