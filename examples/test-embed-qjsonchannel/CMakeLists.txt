@@ -30,3 +30,6 @@ install(
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
 )
+
+# PATH variable for VS
+configure_file(../project.vcxproj.user.in ${CMAKE_BINARY_DIR}/examples/${PROJECT_NAME}/${PROJECT_NAME}.vcxproj.user @ONLY) 
