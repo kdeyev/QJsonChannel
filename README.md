@@ -30,10 +30,10 @@ Like QtWebChannel, QJsonChannel is leveraging Qt's meta-object system for method
 # Components
 
 * [QJsonChannel](QJsonChannel) - RPC layer based on top of Qt meta objects invocation
-* [QJsonChannelEmbed] - the library utilizes QtWebChannel internal transport for passing messages to QJsonChannel RPC layer
-* [QJsonChannelBeast] - the library utilizes Boost.Beast library for WebSocket and HTTP transport over QJsonChannel RPC layer
-* [QJsonChannelTufao] - the library utilizes Tufao library for WebSocket and HTTP transport over QJsonChannel RPC layer
-* [qjsonchannel.js] - JavaScript layer over simple-jsonrpc-js which uses the JSON Schema Service Descriptor for building JS stubs on client side. 
+* [QJsonChannelEmbed](QJsonChannelEmbed) - the library utilizes QtWebChannel internal transport for passing messages to QJsonChannel RPC layer
+* [QJsonChannelBeast](QJsonChannelBeast) - the library utilizes Boost.Beast library for WebSocket and HTTP transport over QJsonChannel RPC layer
+* [QJsonChannelTufao](QJsonChannelTufao) - the library utilizes Tufao library for WebSocket and HTTP transport over QJsonChannel RPC layer
+* [qjsonchannel.js](javascript) - JavaScript layer over simple-jsonrpc-js which uses the JSON Schema Service Descriptor for building JS stubs on client side. 
 
 # Build
 
@@ -55,23 +55,23 @@ Like QtWebChannel, QJsonChannel is leveraging Qt's meta-object system for method
 # Examples
 
 ## Server side
-- <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> [Tufao QJsonChannel Server](https://github.com/kdeyev/QJsonChannel/tree/master/examples/tufao-server) illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Tufao server. The QJsonChannel server supports [JSON-RPC](http://jsonrpc.org/)  calls and provides service descriptions by [JSON Schema Service Descriptor](https://jsonrpc.org/historical/).
-- <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> [Boost.Beast QJsonChannel Server](https://github.com/kdeyev/QJsonChannel/tree/master/examples/beast-server) illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Boost.Beast server. The QJsonChannel server supports [JSON-RPC](http://jsonrpc.org/)  calls and provides service descriptions by [JSON Schema Service Descriptor](https://jsonrpc.org/historical/).
+- <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> [Tufao QJsonChannel Server](examples/tufao-server) illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Tufao server. The QJsonChannel server supports [JSON-RPC](http://jsonrpc.org/)  calls and provides service descriptions by [JSON Schema Service Descriptor](https://jsonrpc.org/historical/).
+- <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> [Boost.Beast QJsonChannel Server](examples/beast-server) illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Boost.Beast server. The QJsonChannel server supports [JSON-RPC](http://jsonrpc.org/)  calls and provides service descriptions by [JSON Schema Service Descriptor](https://jsonrpc.org/historical/).
   
 ## Client side
-- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [HTTP JSON-RPC Client](https://github.com/kdeyev/QJsonChannel/blob/master/javascript/examples/http-client/index.html) shows access to JSON-RPC server using HTTP transport 
-- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [WebSocket JSON-RPC Client](https://github.com/kdeyev/QJsonChannel/blob/master/javascript/examples/ws-client/index.html) shows access to JSON-RPC server using WebSocket transport.
-- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [WebSocket QJsonChannel Client](https://github.com/kdeyev/QJsonChannel/blob/master/javascript/examples/rpc-ws-client/index.html) shows access to QJsonChannel server using WebSocket transport and client-side stubs.
-- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [HTTP QJsonChannel Client](https://github.com/kdeyev/QJsonChannel/blob/master/javascript/examples/rpc-http-client/index.html) shows access to JSON-RPC server using HTTP transport and client side stubs
-- <img src="https://seeklogo.com/images/R/react-logo-7B3CE81517-seeklogo.com.png" width="12" height="12"> [Automatic UI Generation using React and QJsonChannel](https://github.com/kdeyev/QJsonChannel/tree/master/javascript/examples/react-froms-client) shows how to generate UI forms for RPC functions exposed by the QJsonChannel server. 
-- <img src="https://seeklogo.com/images/P/python-logo-A32636CAA3-seeklogo.com.png" width="12" height="12"> [HTTP JSON-RPC Client](https://github.com/kdeyev/QJsonChannel/blob/master/python/http_jsonrpc_requests.py) shows access to JSON-RPC server using HTTP transport and client-side stubs using [jsonrpc-requests Python libary](https://pypi.org/project/jsonrpc-requests/)
+- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [HTTP JSON-RPC Client](javascript/examples/http-client/index.html) shows access to JSON-RPC server using HTTP transport 
+- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [WebSocket JSON-RPC Client](javascript/examples/ws-client/index.html) shows access to JSON-RPC server using WebSocket transport.
+- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [WebSocket QJsonChannel Client](javascript/examples/rpc-ws-client/index.html) shows access to QJsonChannel server using WebSocket transport and client-side stubs.
+- <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [HTTP QJsonChannel Client](javascript/examples/rpc-http-client/index.html) shows access to JSON-RPC server using HTTP transport and client side stubs
+- <img src="https://seeklogo.com/images/R/react-logo-7B3CE81517-seeklogo.com.png" width="12" height="12"> [Automatic UI Generation using React and QJsonChannel](javascript/examples/react-froms-client) shows how to generate UI forms for RPC functions exposed by the QJsonChannel server. 
+- <img src="https://seeklogo.com/images/P/python-logo-A32636CAA3-seeklogo.com.png" width="12" height="12"> [HTTP JSON-RPC Client](python/http_jsonrpc_requests.py) shows access to JSON-RPC server using HTTP transport and client-side stubs using [jsonrpc-requests Python libary](https://pypi.org/project/jsonrpc-requests/)
 
 ### Client-side examples tips
-All of these tests can work with with [Tufao QJsonChannel Server](https://github.com/kdeyev/QJsonChannel/tree/master/examples/tufao-server) or [Boost.Beast QJsonChannel Server](https://github.com/kdeyev/QJsonChannel/tree/master/examples/beast-server).
+All of these tests can work with with [Tufao QJsonChannel Server](examples/tufao-server) or [Boost.Beast QJsonChannel Server](examples/beast-server).
 
 ## Hybrid (Server + Client)
-* <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/Q/qt-logo-1631E0218A-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [QtWebChannel Hybrid Application](https://github.com/kdeyev/QJsonChannel/blob/master/examples/qtwebchannel-hybrid/src/main.cpp) illustrates a hybrid approach of application building. The example includes the logic of both frontend and backend and uses [QtWebChannel](https://doc.qt.io/qt-5.12/qtwebchannel-index.html) for the communication between JavaScript and C++.
-* <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/Q/qt-logo-1631E0218A-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [QJsonChannel Hybrid Application](https://github.com/kdeyev/QJsonChannel/blob/master/examples/qjsonchannel-hybrid/src/main.cpp) illustrates the same idea as [QtWebChannel Hybrid Application](https://github.com/kdeyev/QJsonChannel/blob/master/examples/qtwebchannel-hybrid/src/main.cpp) but uses QJsonChannel "instead of" QtWebChannel.
+* <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/Q/qt-logo-1631E0218A-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [QtWebChannel Hybrid Application](examples/qtwebchannel-hybrid/src/main.cpp) illustrates a hybrid approach of application building. The example includes the logic of both frontend and backend and uses [QtWebChannel](https://doc.qt.io/qt-5.12/qtwebchannel-index.html) for the communication between JavaScript and C++.
+* <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/Q/qt-logo-1631E0218A-seeklogo.com.png" width="12" height="12"> <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [QJsonChannel Hybrid Application](examples/qjsonchannel-hybrid/src/main.cpp) illustrates the same idea as [QtWebChannel Hybrid Application](examples/qtwebchannel-hybrid/src/main.cpp) but uses QJsonChannel "instead of" QtWebChannel.
 Actually I have difficulties with the internal web channel transport access.
 So, currently I'm using the QtWebChannel for message passing, but the service invocation is done using QJsonChannel.
 ### Hybrid Examples Tips
@@ -86,9 +86,9 @@ Requirements
 References
 ==========
 - [QtWebChannel](https://doc.qt.io/qt-5.12/qtwebchannel-index.html) enables peer-to-peer communication between a server (QML/C++ application) and a client (HTML/JavaScript or QML application)
-- [QJsonRpc](https://bitbucket.org/devonit/qjsonrpc)
-- [Boost.Beast](https://github.com/boostorg/beast)
-- [TUFÃO](http://vinipsmaker.github.io/tufao/)
+- [QJsonRpc](https://bitbucket.org/devonit/qjsonrpc) is a Qt implementation of the JSON-RPC protocol.
+- [Boost.Beast](https://github.com/boostorg/beast) HTTP and WebSocket built on Boost.Asio in C++11
+- [TUFÃO](http://vinipsmaker.github.io/tufao/) is an asynchronous web framework for C++ built on top of Qt
 - [simple-jsonrpc-js](https://github.com/jershell/simple-jsonrpc-js) - Simple JSON-RPC javascript library. Generate and parse json rpc messages
 - [jsonrpc-requests](https://pypi.org/project/jsonrpc-requests/) - compact and simple JSON-RPC client implementation
 - [JSON](http://www.json.org/) is a lightweight data interchange format.
