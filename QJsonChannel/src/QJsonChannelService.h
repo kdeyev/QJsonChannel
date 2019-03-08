@@ -5,37 +5,33 @@
 
 #include "QJsonChannelMessage.h"
 
-class QJsonChannelServiceProvider;
+class QJsonChannelServiceRepository;
 class QJsonChannelServicePrivate;
-class QJSONCHANNEL_EXPORT QJsonChannelService : public QObject
-{
+class QJSONCHANNEL_EXPORT QJsonChannelService : public QObject {
     Q_OBJECT
 public:
-	// QJsonChannelService wrapper
-	QJsonChannelService(const QByteArray& name, QObject *obj, QObject *parent = nullptr); 
+    // QJsonChannelService wrapper
+    QJsonChannelService (const QByteArray& name, QObject* obj, QObject* parent = nullptr);
 
-	// for inheritance
-	explicit QJsonChannelService (QObject *parent = nullptr);
-	
-    ~QJsonChannelService();
+    // for inheritance
+    explicit QJsonChannelService (QObject* parent = nullptr);
 
-	const QByteArray& serviceName() const;
-	const QJsonObject& serviceInfo() const;
+    ~QJsonChannelService ();
 
-	const QMetaObject* serviceMetaObject() const;
+    const QByteArray&  serviceName () const;
+    const QJsonObject& serviceInfo () const;
 
-protected Q_SLOTS:
-    QJsonChannelMessage dispatch(const QJsonChannelMessage &request);
+    const QMetaObject* serviceMetaObject () const;
 
 private:
-    Q_DISABLE_COPY(QJsonChannelService)
-    Q_DECLARE_PRIVATE(QJsonChannelService)
-    friend class QJsonChannelServiceProvider;
+    QJsonChannelMessage dispatch (const QJsonChannelMessage& request);
+    void                cacheInvokableInfo ();
+
+    Q_DISABLE_COPY (QJsonChannelService)
+    Q_DECLARE_PRIVATE (QJsonChannelService)
+    friend class QJsonChannelServiceRepository;
 
 #if !defined(USE_QT_PRIVATE_HEADERS)
     QScopedPointer<QJsonChannelServicePrivate> d_ptr;
 #endif
-
 };
-
-

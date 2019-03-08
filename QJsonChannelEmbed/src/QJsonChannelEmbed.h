@@ -3,7 +3,7 @@
 #include <memory>
 
 #include <QWebChannel>
-#include <QJsonChannelServiceProvider.h>
+#include <QJsonChannelServiceRepository.h>
 #include "qjsonchannelembed_export.h"
 
 class QJsonChannelEmbedImpl;
@@ -15,7 +15,7 @@ public:
 	~QJsonChannelEmbed();
 
 	QWebChannel _channel; 
-	QJsonChannelServiceProvider _serviceRepository;
+	QJsonChannelServiceRepository _serviceRepository;
 private:
 	QJsonChannelEmbedImpl* _impl;
 };

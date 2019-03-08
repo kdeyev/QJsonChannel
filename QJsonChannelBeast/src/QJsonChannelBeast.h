@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QJsonChannelServiceProvider.h>
+#include <QJsonChannelServiceRepository.h>
 #include "QJsonChannelBeast_export.h"
 
 #include <boost/asio/ip/tcp.hpp>
@@ -13,7 +13,7 @@ public:
 	~QJsonChannelBeast();
 	void start (const boost::asio::ip::tcp::endpoint& ep);
 
-	QJsonChannelServiceProvider _serviceRepository;
+	QJsonChannelServiceRepository _serviceRepository;
 private:
 	QJsonChannelBeastImpl* _impl;
 };

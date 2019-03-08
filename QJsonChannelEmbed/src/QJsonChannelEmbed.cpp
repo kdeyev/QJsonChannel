@@ -4,7 +4,7 @@
 
 class QJsonChannelEmbedImpl {
 public:
- 	QJsonChannelEmbedImpl(QJsonChannelServiceProvider* serviceRepository) 
+ 	QJsonChannelEmbedImpl(QJsonChannelServiceRepository* serviceRepository) 
 	 : _adapter (new QJsonChannelEmbedAdapter(serviceRepository)) {
 	 }
 	std::unique_ptr<QJsonChannelEmbedAdapter> _adapter;

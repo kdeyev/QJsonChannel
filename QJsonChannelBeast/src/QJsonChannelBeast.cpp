@@ -35,7 +35,7 @@ template<
     class Send>
 void
 handle_request(
-	QJsonChannelServiceProvider* serviceRepository,
+	QJsonChannelServiceRepository* serviceRepository,
     http::request<Body, http::basic_fields<Allocator>>&& req,
     Send&& send)
 {
@@ -111,11 +111,11 @@ class websocket_session : public std::enable_shared_from_this<websocket_session>
     boost::asio::steady_timer timer_;
     boost::beast::multi_buffer buffer_;
     char ping_state_ = 0;
-	QJsonChannelServiceProvider* _serviceRepository;
+	QJsonChannelServiceRepository* _serviceRepository;
 public:
     // Take ownership of the socket
     explicit
-    websocket_session(tcp::socket socket, QJsonChannelServiceProvider* serviceRepository)
+    websocket_session(tcp::socket socket, QJsonChannelServiceRepository* serviceRepository)
         : ws_(std::move(socket))
         , strand_(ws_.get_executor())
         , timer_(ws_.get_executor().context(),
@@ -465,7 +465,7 @@ class http_session : public std::enable_shared_from_this<http_session>
         boost::asio::io_context::executor_type> strand_;
     boost::asio::steady_timer timer_;
     boost::beast::flat_buffer buffer_;
-	QJsonChannelServiceProvider* serviceRepository_;
+	QJsonChannelServiceRepository* serviceRepository_;
     http::request<http::string_body> req_;
     queue queue_;
 
@@ -474,7 +474,7 @@ public:
     explicit
     http_session(
         tcp::socket socket,
-		QJsonChannelServiceProvider* serviceRepository_)
+		QJsonChannelServiceRepository* serviceRepository_)
         : socket_(std::move(socket))
         , strand_(socket_.get_executor())
         , timer_(socket_.get_executor().context(),
@@ -633,13 +633,13 @@ class listener : public std::enable_shared_from_this<listener>
 {
     tcp::acceptor acceptor_;
     tcp::socket socket_;
-	QJsonChannelServiceProvider* serviceRepository_;
+	QJsonChannelServiceRepository* serviceRepository_;
 
 public:
     listener(
         boost::asio::io_context& ioc,
         tcp::endpoint endpoint,
-		QJsonChannelServiceProvider* serviceRepository)
+		QJsonChannelServiceRepository* serviceRepository)
         : acceptor_(ioc)
         , socket_(ioc)
         , serviceRepository_(serviceRepository)
