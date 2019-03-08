@@ -31,3 +31,7 @@
 *.out
 *.app
 /build
+QJsonChannelTufao/src/QJsonChannelTufao_export.h
+QJsonChannel/src/QJsonChannel_export.h
+QJsonChannelBeast/src/QJsonChannelBeast_export.h
+QJsonChannelEmbed/src/QJsonChannelEmbed_export.h

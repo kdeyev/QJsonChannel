@@ -85,6 +85,7 @@ Requirements
 
 References
 ==========
+- [QtWebChannel](https://doc.qt.io/qt-5.12/qtwebchannel-index.html) enables peer-to-peer communication between a server (QML/C++ application) and a client (HTML/JavaScript or QML application)
 - [QJsonRpc](https://bitbucket.org/devonit/qjsonrpc)
 - [Boost.Beast](https://github.com/boostorg/beast)
 - [TUFÃO](http://vinipsmaker.github.io/tufao/)
