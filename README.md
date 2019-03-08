@@ -69,9 +69,8 @@ Like QtWebChannel, QJsonChannel is leveraging Qt's meta-object system for method
 - <img src="https://seeklogo.com/images/R/react-logo-7B3CE81517-seeklogo.com.png" width="12" height="12"> [react-froms](https://github.com/kdeyev/QJsonChannel/tree/master/javascript/examples/react-froms-client) shows how to generate UI forms for RPC functions exposed by the QJsonChannel server. 
 
 ### Python
-- <img src="https://seeklogo.com/images/P/python-logo-A32636CAA3-seeklogo.com.png" width="12" height="12"> [testqjsonrpc_http.py](https://github.com/kdeyev/QJsonChannel/blob/master/python/testqjsonrpc_http.py) shows access to JSON-RPC server using HTTP transport
-- <img src="https://seeklogo.com/images/P/python-logo-A32636CAA3-seeklogo.com.png" width="12" height="12"> [testqjsonrpc_websocket.py](https://github.com/kdeyev/QJsonChannel/blob/master/python/testqjsonrpc_websocket.py) shows access to JSON-RPC server using WebSocket transport
-- <img src="https://seeklogo.com/images/P/python-logo-A32636CAA3-seeklogo.com.png" width="12" height="12"> [testqjsonrpc_requests.py](https://github.com/kdeyev/QJsonChannel/blob/master/python/testqjsonrpc_requests.py) shows access to JSON-RPC server using HTTP transport and client side stubs
+- <img src="https://seeklogo.com/images/P/python-logo-A32636CAA3-seeklogo.com.png" width="12" height="12"> [http_jsonrpc_requests.py](https://github.com/kdeyev/QJsonChannel/blob/master/python/http_jsonrpc_requests.py) shows access to JSON-RPC server using HTTP transport and client-side stubs using [jsonrpc-requests Python libary](https://pypi.org/project/jsonrpc-requests/)
+
 ### Client-side examples tips
 All of these tests can work with with [Tufao QJsonChannel Server](https://github.com/kdeyev/QJsonChannel/tree/master/examples/tufao-server) or [Boost.Beast QJsonChannel Server](https://github.com/kdeyev/QJsonChannel/tree/master/examples/beast-server).
 
