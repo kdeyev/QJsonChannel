@@ -13,6 +13,7 @@
         //configure
         var jrpc = new simple_jsonrpc();
 
+        //set a communication function
         jrpc.toStream = function(_msg){
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
