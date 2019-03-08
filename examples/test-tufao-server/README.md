@@ -1,13 +1,6 @@
-# QJsonChannel HTTP/WebSocket Tufao-based server 
+# QJsonChannel HTTP/WebSocket Tufao-based server <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="24" height="24">
 
-The illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Tufao server.
+The example illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Tufao server.
 
-    - run test-tufao-server
-    - run any of client example:
-        - chrome javascript/examples/http/index.html
-        - chrome javascript/examples/rpc-http/index.html
-        - chrome javascript/examples/ws/index.html
-        - chrome javascript/examples/rpc-ws/index.html
-        - python python/testqjsonrpc_http.py
-        - python python/testqjsonrpc_websocket.py
-        - python python/testqjsonrpc_requests.py
+- run test-tufao-server
+- run any of [client-side examples]()
