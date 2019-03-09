@@ -134,12 +134,12 @@ QJsonChannelServicePrivate::MethodInfo::MethodInfo (const QMetaMethod& method) :
 //QJsonChannelService::QJsonChannelService (QObject* parent) : QObject (parent) {
 //    d_ptr.reset (new QJsonChannelServicePrivate (this, getServiceName (this), getServiceVersion(this), getServiceDescription(this), this));
 //}
-
-QJsonChannelService::QJsonChannelService (const QByteArray& name, QObject* serviceObj, const QByteArray& version, const QByteArray& description,
-                                          QObject* parent)
-    : QObject (parent) {
-    d_ptr.reset (new QJsonChannelServicePrivate (this, name, version, description, serviceObj));
-}
+//
+//QJsonChannelService::QJsonChannelService (const QByteArray& name, QObject* serviceObj, const QByteArray& version, const QByteArray& description,
+//                                          QObject* parent)
+//    : QObject (parent) {
+//    d_ptr.reset (new QJsonChannelServicePrivate (this, name, version, description, serviceObj));
+//}
 
 QJsonChannelService::QJsonChannelService (const QByteArray& name, const QByteArray& version, const QByteArray& description, QObject* serviceObj,
                                           QObject* parent)
@@ -148,6 +148,10 @@ QJsonChannelService::QJsonChannelService (const QByteArray& name, const QByteArr
 }
 
 QJsonChannelService::~QJsonChannelService () {
+}
+
+QObject* QJsonChannelService::serviceObj() {
+	return d_ptr->serviceObj;
 }
 
 const QByteArray& QJsonChannelService::serviceName () const {

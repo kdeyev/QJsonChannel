@@ -11,7 +11,6 @@ class QJSONCHANNEL_EXPORT QJsonChannelService : public QObject {
     Q_OBJECT
 public:
     // QJsonChannelService wrapper
-    QJsonChannelService (const QByteArray& name, QObject* obj, const QByteArray& version = "", const QByteArray& description = "", QObject* parent = nullptr);
     QJsonChannelService (const QByteArray& name, const QByteArray& version, const QByteArray& description, QObject* obj, QObject* parent = nullptr);
 
     //// for inheritance
@@ -19,6 +18,7 @@ public:
 
     ~QJsonChannelService ();
 
+    QObject*           serviceObj ();
     const QByteArray&  serviceName () const;
     const QJsonObject& serviceInfo () const;
 

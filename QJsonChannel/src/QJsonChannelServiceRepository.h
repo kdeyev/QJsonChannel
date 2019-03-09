@@ -17,14 +17,26 @@ public:
     QJsonChannelServiceRepository ();
     ~QJsonChannelServiceRepository ();
 
+     /**
+      * @brief Adds service to the repository
+      * 
+      * @param service A service to attach to the repository
+      * @return true in case the sevice was added
+      * @return false in case of failure
+      */
+     bool addService (QJsonChannelService* service);
+    
     /**
      * @brief Adds service to the repository
      * 
-     * @param service A service to attach to the repository
-     * @return true in case the sevice was added
-     * @return false in case of failure
+     * @param name Service name
+     * @param version Service version
+     * @param description Service description
+     * @param obj Service object
+     * @return true In case the sevice was added
+     * @return false In case of failure
      */
-    bool addService (QJsonChannelService* service);
+    bool addService (const QByteArray& name, const QByteArray& version, const QByteArray& description, QObject* obj);
 
     /**
      * @brief Return service by name
@@ -33,6 +45,14 @@ public:
      * @return QJsonChannelService* a found sevice 
      */
     QJsonChannelService* getService (const QByteArray& serviceName);
+
+    /**
+     * @brief Return service object by name
+     * 
+     * @param serviceName a service name to search
+     * @return QJsonChannelService* a found sevice 
+     */
+    QObject* getServiceObject (const QByteArray& serviceName);
 
     /**
      * @brief Removes service from the repository

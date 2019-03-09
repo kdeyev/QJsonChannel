@@ -30,6 +30,11 @@ QJsonChannelServiceRepository::QJsonChannelServiceRepository () : d (new QJsonCh
 QJsonChannelServiceRepository::~QJsonChannelServiceRepository () {
 }
 
+bool QJsonChannelServiceRepository::addService (const QByteArray& serviceName, const QByteArray& version, const QByteArray& description, QObject* obj) {
+    QJsonChannelService* service = new QJsonChannelService(serviceName, version, description, obj);
+	return addService (service);
+}
+
 bool QJsonChannelServiceRepository::addService (QJsonChannelService* service) {
     QByteArray serviceName = service->serviceName ();
     if (serviceName.isEmpty ()) {
@@ -72,6 +77,14 @@ QJsonChannelService* QJsonChannelServiceRepository::getService (const QByteArray
     }
 
     return d->services.value (serviceName);
+}
+
+QObject* QJsonChannelServiceRepository::getServiceObject (const QByteArray& serviceName) {
+    if (!d->services.contains (serviceName)) {
+        return nullptr;
+    }
+
+    return d->services.value (serviceName)->serviceObj();
 }
 
 QJsonChannelMessage QJsonChannelServiceRepository::processMessage (const QJsonChannelMessage& message) {

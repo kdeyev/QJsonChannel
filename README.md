@@ -93,5 +93,5 @@ References
 - [jsonrpc-requests](https://pypi.org/project/jsonrpc-requests/) - compact and simple JSON-RPC client implementation
 - [JSON](http://www.json.org/) is a lightweight data interchange format.
 - [JSON-RPC](http://jsonrpc.org/) is lightweight remote procedure call protocol similar to XML-RPC.
-- [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html)
 - [React JSon Schema Form](https://github.com/mozilla-services/react-jsonschema-form) A React component for building Web forms from JSON Schema.
+- [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html) is simply a JSON Schema with the additional definition for methods.
