@@ -3,6 +3,19 @@
 This example shows how to generate UI forms for RPC functions exposed by the QJsonChannel server.
 The example utilizes the [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html) format for discovering service list on a specific QJsonChannel server and uses the [React Jon Schema Form](https://github.com/mozilla-services/react-jsonschema-form) for the UI forms generation. A generated UI Form allows specifying parameter values and invokes a server-side method using QJsonChannel.
 
+## Example running
+For the example running you need to do the regular React stuff:
+~~~~~shell
+npm install
+npm start
+~~~~~
+For build:
+~~~~~shell
+npm run build
+~~~~~
+
+
+## How it works
 1. At the first step, QJsonChannel UI Forms send a __init__ request to QJsonChannel server and receives a response in JSON Schema Service Descriptor format. For example:
 ~~~~json
 {

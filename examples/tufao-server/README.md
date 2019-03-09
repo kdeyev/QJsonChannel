@@ -3,4 +3,7 @@
 The example illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Tufao server.
 
 - run tufao-server
-- run any of [client-side examples]()
+- run any of [Client-side examples](../../README.md###Client-side)
+
+# References
+- [TUFÃO](http://vinipsmaker.github.io/tufao/) is an asynchronous web framework for C++ built on top of Qt

@@ -5,7 +5,7 @@
   - [Build QJsonChannel](#build-qjsonchannel)
 - [Examples](#examples)
   - [Server side](#server-side)
-  - [Client side](#client-side)
+  - [Client-side](#client-side)
     - [Client-side examples tips](#client-side-examples-tips)
   - [Hybrid (Server + Client)](#hybrid-server--client)
     - [Hybrid Examples Tips](#hybrid-examples-tips)
@@ -58,7 +58,7 @@ Like QtWebChannel, QJsonChannel is leveraging Qt's meta-object system for method
 - <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> [Tufao QJsonChannel Server](examples/tufao-server) illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Tufao server. The QJsonChannel server supports [JSON-RPC](http://jsonrpc.org/)  calls and provides service descriptions by [JSON Schema Service Descriptor](https://jsonrpc.org/historical/).
 - <img src="https://seeklogo.com/images/C/c-logo-43CE78FF9C-seeklogo.com.png" width="12" height="12"> [Boost.Beast QJsonChannel Server](examples/beast-server) illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Boost.Beast server. The QJsonChannel server supports [JSON-RPC](http://jsonrpc.org/)  calls and provides service descriptions by [JSON Schema Service Descriptor](https://jsonrpc.org/historical/).
   
-## Client side
+## Client-side
 - <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [HTTP JSON-RPC Client](javascript/examples/http-client/index.html) shows access to JSON-RPC server using HTTP transport 
 - <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [WebSocket JSON-RPC Client](javascript/examples/ws-client/index.html) shows access to JSON-RPC server using WebSocket transport.
 - <img src="https://seeklogo.com/images/J/javascript-js-logo-2949701702-seeklogo.com.png" width="12" height="12"> [WebSocket QJsonChannel Client](javascript/examples/rpc-ws-client/index.html) shows access to QJsonChannel server using WebSocket transport and client-side stubs.

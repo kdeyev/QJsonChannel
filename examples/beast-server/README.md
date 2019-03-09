@@ -3,7 +3,7 @@
 The example illustrates the building of JSON-RPC services using QJsonChannel and HTTP/WebSocket Boost.Beast server.
 
 - run beast-server
-- run any of [client-side examples]()
+- run any of [Client-side examples](../../README.md###Client-side)
 
 # References
 - [Boost.Beast](https://github.com/boostorg/beast) HTTP and WebSocket built on Boost.Asio in C++11
