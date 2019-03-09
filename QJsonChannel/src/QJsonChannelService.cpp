@@ -16,9 +16,9 @@ class QJsonChannelService;
 
 class QJsonChannelServicePrivate {
 public:
-    QJsonChannelServicePrivate (QJsonChannelService* parent, const QByteArray& name, QObject* obj)
+    QJsonChannelServicePrivate (QJsonChannelService* parent, const QByteArray& name, const QByteArray& version, const QByteArray& description, QObject* obj)
         : //delayedResponse(false),
-          q_ptr (parent), serviceName (name), serviceObj (obj) {
+          q_ptr (parent), serviceName (name), serviceVersion (version), serviceDescription (description), serviceObj (obj) {
     }
 
     QJsonObject createServiceInfo () const;
@@ -56,6 +56,8 @@ public:
     QJsonChannelService* const q_ptr;
     QObject*                   serviceObj = nullptr;
     QByteArray                 serviceName;
+    QString                    serviceVersion;
+    QString                    serviceDescription;
     Q_DECLARE_PUBLIC (QJsonChannelService)
 };
 
@@ -101,23 +103,48 @@ QJsonChannelServicePrivate::MethodInfo::MethodInfo (const QMetaMethod& method) :
     }
 }
 
-QByteArray getServiceName (QObject* obj) {
-    const QMetaObject* mo = obj->metaObject ();
-    for (int i = 0; i < mo->classInfoCount (); i++) {
-        const QMetaClassInfo mci = mo->classInfo (i);
-        if (mci.name () == QLatin1String ("serviceName"))
-            return mci.value ();
-    }
+//QByteArray getClassInfo(QObject* obj, const char* field) {
+//	const QMetaObject* mo = obj->metaObject();
+//	for (int i = 0; i < mo->classInfoCount(); i++) {
+//		const QMetaClassInfo mci = mo->classInfo(i);
+//		if (mci.name() == QLatin1String(field))
+//			return mci.value();
+//	}
+//
+//	return QByteArray();
+//}
+//
+//QByteArray getServiceName (QObject* obj) {
+//	QByteArray serviceName = getClassInfo(obj, "serviceName");
+//	if (serviceName.isEmpty()) {
+//		const QMetaObject* mo = obj->metaObject();
+//		serviceName = QByteArray(mo->className()).toLower();
+//	}
+//	return serviceName;
+//}
+//
+//QByteArray getServiceDescription(QObject* obj) {
+//	return getClassInfo(obj, "serviceDescription");
+//}
+//
+//QByteArray getServiceVersion(QObject* obj) {
+//	return getClassInfo(obj, "serviceVersion");
+//}
+//
+//QJsonChannelService::QJsonChannelService (QObject* parent) : QObject (parent) {
+//    d_ptr.reset (new QJsonChannelServicePrivate (this, getServiceName (this), getServiceVersion(this), getServiceDescription(this), this));
+//}
 
-    return QByteArray (mo->className ()).toLower ();
+QJsonChannelService::QJsonChannelService (const QByteArray& name, QObject* serviceObj, const QByteArray& version, const QByteArray& description,
+                                          QObject* parent)
+    : QObject (parent) {
+    d_ptr.reset (new QJsonChannelServicePrivate (this, name, version, description, serviceObj));
 }
 
-QJsonChannelService::QJsonChannelService (QObject* parent) : QObject (parent) {
-    d_ptr.reset (new QJsonChannelServicePrivate (this, getServiceName (this), this));
-}
-
-QJsonChannelService::QJsonChannelService (const QByteArray& name, QObject* serviceObj, QObject* parent) : QObject (parent) {
-    d_ptr.reset (new QJsonChannelServicePrivate (this, name, serviceObj));
+QJsonChannelService::QJsonChannelService (const QByteArray& name, const QByteArray& version, const QByteArray& description, QObject* serviceObj,
+                                          QObject* parent)
+    : QObject (parent) {
+    d_ptr.reset (new QJsonChannelServicePrivate (this, name, version, description, serviceObj));
 }
 
 QJsonChannelService::~QJsonChannelService () {
@@ -168,14 +195,14 @@ QJsonObject QJsonChannelServicePrivate::createServiceInfo () const {
     data["jsonrpc"] = "2.0";
 
     QJsonObject info;
-    info["title"]   = "Service";
-    info["version"] = "1.0";
+    info["title"]   = serviceDescription;
+    info["version"] = serviceVersion;
 
     data["info"] = info;
 
-    QJsonObject qtMethods;
+    QJsonObject   qtMethods;
     QSet<QString> identifiers;
- 
+
     for (auto iter = methodInfoHash.begin (); iter != methodInfoHash.end (); ++iter) {
         const MethodInfo& info = iter.value ();
         QString           name = info.name;
