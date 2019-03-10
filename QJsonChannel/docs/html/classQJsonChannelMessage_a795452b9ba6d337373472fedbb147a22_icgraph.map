@@ -1,6 +1,0 @@
-<map id="QJsonChannelMessage::type" name="QJsonChannelMessage::type">
-<area shape="rect" id="node1" title=" " alt="" coords="264,57,423,98"/>
-<area shape="rect" id="node2" href="$QJsonChannelMessage_8h.html#a2db1c243ddc3669d62f0bee937cd5871" title=" " alt="" coords="68,5,153,32"/>
-<area shape="rect" id="node3" href="$classQJsonChannelMessage.html#a34676e15e30aabed7864aa1b706fb7d4" title=" " alt="" coords="31,57,190,98"/>
-<area shape="rect" id="node4" href="$classQJsonChannelServiceRepository.html#a312e1ae42f822a12b1fcb5a0c585ed03" title="Process a JSON&#45;RPC message. In general it means the invogation of a requested function of a requested..." alt="" coords="5,122,216,163"/>
-</map>

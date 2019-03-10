@@ -15,7 +15,7 @@ file(GLOB_RECURSE INCLUDE_FILES src/*.h)
 add_definitions(-D_WIN32_WINNT=0x0601)
 
 include_directories(src)
-include_directories(${QJsonChannel_INCLUDE_DIR})
+include_directories(${QJsonChannelCore_INCLUDE_DIR})
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
@@ -25,7 +25,7 @@ generate_export_header(${PROJECT_NAME})
 file(COPY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_export.h DESTINATION ${PROJECT_SOURCE_DIR}/src)
 
 qt5_use_modules(${PROJECT_NAME} Core)
-target_link_libraries(${PROJECT_NAME} QJsonChannel)
+target_link_libraries(${PROJECT_NAME} QJsonChannelCore)
 
 install(FILES ${INCLUDE_FILES} DESTINATION "include/${PROJECT_NAME}")
 install(

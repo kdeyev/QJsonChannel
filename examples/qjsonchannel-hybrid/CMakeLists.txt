@@ -14,7 +14,7 @@ set(CMAKE_AUTORCC ON)
 
 include_directories(src)
 include_directories(${SERVICE_SRC_DIR})
-include_directories(${QJsonChannel_INCLUDE_DIR})
+include_directories(${QJsonChannelCore_INCLUDE_DIR})
 include_directories(${QJsonChannelEmbed_INCLUDE_DIR})
 
 qt5_add_resources(QRCS src/resources.qrc)
@@ -23,7 +23,7 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES} ${QRCS})
 
 qt5_use_modules(${PROJECT_NAME} Core Widgets WebChannel WebEngineWidgets)
 
-target_link_libraries(${PROJECT_NAME} QJsonChannel QJsonChannelEmbed)
+target_link_libraries(${PROJECT_NAME} QJsonChannelCore QJsonChannelEmbed)
 install(
     TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION lib

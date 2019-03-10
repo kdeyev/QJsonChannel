@@ -13,7 +13,7 @@ add_definitions(-D_WIN32_WINNT=0x0601)
 
 include_directories(src)
 include_directories(${SERVICE_SRC_DIR})
-include_directories(${QJsonChannel_INCLUDE_DIR})
+include_directories(${QJsonChannelCore_INCLUDE_DIR})
 include_directories(${QJsonChannelBeast_INCLUDE_DIR})
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
@@ -22,7 +22,7 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
 
 qt5_use_modules(${PROJECT_NAME} Core)
 
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} QJsonChannel QJsonChannelBeast)
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} QJsonChannelCore QJsonChannelBeast)
 install(
     TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION lib
