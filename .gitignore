@@ -32,6 +32,5 @@
 *.app
 /build
 QJsonChannelTufao/src/QJsonChannelTufao_export.h
-QJsonChannelCore/src/QJsonChannelCore_export.h
 QJsonChannelBeast/src/QJsonChannelBeast_export.h
 QJsonChannelEmbed/src/QJsonChannelEmbed_export.h
