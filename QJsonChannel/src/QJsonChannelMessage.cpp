@@ -291,6 +291,11 @@ QString QJsonChannelMessage::method() const
     return d->object->value(QLatin1String("method")).toString();
 }
 
+QString QJsonChannelMessage::serviceName () const
+{
+	return method().section(".", 0, -2);
+}
+
 QJsonValue QJsonChannelMessage::params() const
 {
     if (d->type == QJsonChannelMessage::Response || d->type == QJsonChannelMessage::Error)

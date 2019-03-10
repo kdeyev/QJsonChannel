@@ -95,7 +95,8 @@ QJsonChannelMessage QJsonChannelServiceRepository::processMessage (const QJsonCh
     }
     case QJsonChannelMessage::Request:
     case QJsonChannelMessage::Notification: {
-        QByteArray serviceName = message.method ().section (".", 0, -2).toLatin1 ();
+		//
+        QByteArray serviceName = message.serviceName().toLatin1 ();
         if (serviceName.isEmpty () || !d->services.contains (serviceName)) {
             if (message.type () == QJsonChannelMessage::Request) {
                 QJsonChannelMessage error =

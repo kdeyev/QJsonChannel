@@ -39,6 +39,7 @@ public:
     int                       id () const;
 
     // request
+    QString    serviceName () const;
     QString    method () const;
     QJsonValue params () const;
 

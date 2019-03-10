@@ -3,13 +3,14 @@
 QJsonChannel utilises ideas and some implementation details of [QJsonRpc](https://bitbucket.org/devonit/qjsonrpc) implementation. QJsonRpc library has tight integration with communication transport and supports server-to-client messages. So QJsonChannel library development for resolving these QJsonRpc specialties. 
 In addition, QJsonChannel supports [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html) for services and methods discovery.
 
-The main component of QJsonChannel is QJsonChannelServiceRepositor. 
-
-## Motivation:
+The main component of QJsonChannel is QJsonChannelServiceRepository. 
 ~~~~~~
 // Build a service repository
-QJsonChannelServiceRepositor serviceRepository;
+QJsonChannelServiceRepository serviceRepository;
+~~~~~~
 
+You can bind QObjects to the QJsonChannelServiceRepository.
+~~~~~~
 // Build a service object
 QObject* testService = new TestService();
 
@@ -17,7 +18,7 @@ QObject* testService = new TestService();
 serviceRepository.addService ("agent", "1.0", "test service", testService);
 ~~~~~~
 
-## Message processing
+The main funcuonality of the QJsonChannelServiceRepository is processing QJsonChannelMessage and dispatching them to QJsonChannelService.
 ~~~~~~
 
 // A JSON-RPC request
@@ -29,6 +30,8 @@ QJsonChannelMessage response = serviceRepository.processMessage (request);
 // Get a JSOON-RPC response
 QByteArray ... = response.toJson();
 ~~~~~~
+
+[API Documentation by Doxygen](docs/html)
 
 ## References
 - [QJsonRpc](https://bitbucket.org/devonit/qjsonrpc) is a Qt implementation of the JSON-RPC protocol.

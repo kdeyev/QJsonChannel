@@ -1,0 +1,9 @@
+<map id="QJsonChannelServiceRepository::processMessage" name="QJsonChannelServiceRepository::processMessage">
+<area shape="rect" id="node1" title="Process a JSON&#45;RPC message. In general it means the invogation of a requested function of a requested..." alt="" coords="5,104,216,145"/>
+<area shape="rect" id="node2" href="$classQJsonChannelMessage.html#a8443da0fda5551ca47935af48d0ab29f" title=" " alt="" coords="264,5,423,47"/>
+<area shape="rect" id="node3" href="$classQJsonChannelMessage.html#a7695850e38389ffec71e0f34256b1a02" title=" " alt="" coords="264,71,423,112"/>
+<area shape="rect" id="node5" href="$classQJsonChannelMessage.html#ae390ad1a8a4f6e5863904597637efd3e" title=" " alt="" coords="264,136,423,177"/>
+<area shape="rect" id="node7" href="$classQJsonChannelMessage.html#a795452b9ba6d337373472fedbb147a22" title=" " alt="" coords="264,201,423,243"/>
+<area shape="rect" id="node4" href="$classQJsonChannelMessage.html#a06a894f759d26cc8b11f2004d0a49b71" title=" " alt="" coords="471,71,629,112"/>
+<area shape="rect" id="node6" href="$classQJsonChannelMessage.html#aed02cd1ff8bcc36f50e3eae610becd73" title=" " alt="" coords="471,136,629,177"/>
+</map>
