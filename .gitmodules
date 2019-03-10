@@ -4,3 +4,6 @@
 [submodule "javascript/qjsonchannel/simple-jsonrpc-js"]
 	path = javascript/qjsonchannel/simple-jsonrpc-js
 	url = https://github.com/kdeyev/simple-jsonrpc-js.git
+[submodule "QJsonChannelCore"]
+	path = QJsonChannelCore
+	url = https://github.com/kdeyev/QJsonChannelCore.git
