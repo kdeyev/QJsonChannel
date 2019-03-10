@@ -8,7 +8,7 @@ int main (int argc, char* argv[]) {
 
     QJsonChannelTufao server;
 
-    server._serviceRepository.addService ("agent", "1.0", "test service", new TestService);
+    server._serviceRepository.addService ("agent", "1.0", "test service", QSharedPointer<QObject> (new TestService));
     server._httpServer.listen (QHostAddress::Any, 5555);
 
     return a.exec ();
