@@ -13,7 +13,7 @@ file(GLOB_RECURSE INCLUDE_FILES src/*.h)
 set(CMAKE_AUTOMOC ON) # For meta object compiler
 
 include_directories(src)
-include_directories(${QJsonChannel_INCLUDE_DIR})
+include_directories(${QJsonChannelCore_INCLUDE_DIR})
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${INCLUDE_FILES} ${META_FILES_TO_INCLUDE})
 #set(CMAKE_CXX_VISIBILITY_PRESET hidden)
@@ -23,7 +23,7 @@ file(COPY ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_export.h DESTINATION ${PRO
 
 qt5_use_modules(${PROJECT_NAME} Core WebChannel)
 
-target_link_libraries(${PROJECT_NAME} QJsonChannel)
+target_link_libraries(${PROJECT_NAME} QJsonChannelCore)
 
 install(FILES ${INCLUDE_FILES} DESTINATION "include/${PROJECT_NAME}")
 install(
