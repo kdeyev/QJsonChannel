@@ -29,7 +29,7 @@ Like QtWebChannel, QJsonChannel is leveraging Qt's meta-object system for method
 
 # Components
 
-* [QJsonChannelCore](QJsonChannelCore) - RPC layer based on top of Qt meta objects invocation
+* [QJsonChannelCore](https://github.com/kdeyev/QJsonChannelCore) - RPC layer based on top of Qt meta objects invocation
 * [qjsonchannel.js](javascript) - JavaScript layer over simple-jsonrpc-js which uses the JSON Schema Service Descriptor for building JS stubs on client side. 
 * [QJsonChannelEmbed](QJsonChannelEmbed) - the library utilizes QtWebChannel internal transport for passing messages to QJsonChannel RPC layer
 * [QJsonChannelBeast](QJsonChannelBeast) - the library utilizes Boost.Beast library for WebSocket and HTTP transport over QJsonChannel RPC layer
