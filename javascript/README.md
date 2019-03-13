@@ -14,7 +14,7 @@ jrpc.toStream = function(_msg){
 };
 
 //call
-jrpc.call("agent.testMethod").then(function (result) {
+jrpc.call("object.testMethod").then(function (result) {
     ...
 });
 ~~~~~~
@@ -28,7 +28,7 @@ jrpc.toStream = function(_msg){
 
 
 new RpcWebChannel(jrpc, function(services) {
-    services.agent.testMethod().then(function (result) {
+    services.object.testMethod().then(function (result) {
         ...
     });
 });

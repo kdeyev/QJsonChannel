@@ -10,7 +10,7 @@ int main (int argc, char* argv[]) {
 
     TestService service;
     QWebChannel channel;
-    channel.registerObject (QStringLiteral ("agent"), &service);
+    channel.registerObject (QStringLiteral ("object"), &service);
 
     QWebEngineView webView;
     webView.page ()->setWebChannel (&channel);

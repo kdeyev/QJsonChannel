@@ -46,16 +46,16 @@
         //after connect
         socket.onopen = function(){
             new RpcWebChannel(jrpc, function(services) {
-                services.agent.testMethod().then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethod result: ' + result + '<br>';
+                services.object.testMethod().then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethod result: ' + result + '<br>';
                 });
 
-                services.agent.testMethodWithParams("one", false, 10).then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParams result: ' + result + '<br>';
+                services.object.testMethodWithParams("one", false, 10).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethodWithParams result: ' + result + '<br>';
                 });
 
-                services.agent.testMethodWithParamsAndReturnValue ("kostya").then(function (result) {
-                    document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
+                services.object.testMethodWithParamsAndReturnValue ("kostya").then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
                 });
             });
         };

@@ -19,7 +19,7 @@ npm run build
 1. At the first step, QJsonChannel UI Forms send a __init__ request to QJsonChannel server and receives a response in JSON Schema Service Descriptor format. For example:
 ~~~~json
 {
-  "agent": {
+  "object": {
     "info": {
       "title": "Service",
       "version": "1.0"

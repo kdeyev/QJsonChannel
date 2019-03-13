@@ -11,7 +11,7 @@ int main (int argc, char* argv[]) {
     QApplication app (argc, argv);
 
     QJsonChannelEmbed channel;
-    channel._serviceRepository.addService ("agent", "1.0", "test service", QSharedPointer<QObject> (new TestService));
+    channel._serviceRepository.addService ("object", "1.0", "test service", QSharedPointer<QObject> (new TestService));
 
     QWebEngineView webView;
     webView.page ()->setWebChannel (&channel._channel);
