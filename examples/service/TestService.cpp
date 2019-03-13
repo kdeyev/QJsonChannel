@@ -9,6 +9,15 @@ void TestService::testMethod () {
     qDebug () << Q_FUNC_INFO << "called" << endl;
 }
 
+QString TestService::getInvokable() {
+	return invokable;
+}
+
+void TestService::setInvokable(QString p) {
+	invokable = p;
+	qDebug() << Q_FUNC_INFO << "called " << endl;
+}
+
 void TestService::testMethodWithParams (const QString& first, bool second, double third) {
     qDebug () << Q_FUNC_INFO << "called with parameters: " << endl
               << " first: " << first << endl

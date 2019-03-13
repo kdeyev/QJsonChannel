@@ -34,17 +34,47 @@
 
  
         new RpcWebChannel(jrpc, function(services) {
-            services.agent.testMethod().then(function (result) {
-                document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethod result: ' + result + '<br>';
+            let object = services.object;
+
+            //
+            // Method Calls
+            //
+
+            object.testMethod().then(function (result) {
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethod result: ' + result + '<br>';
             });
 
-            services.agent.testMethodWithParams("one", false, 10).then(function (result) {
-                document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParams result: ' + result + '<br>';
+            object.testMethodWithParams("one", false, 10).then(function (result) {
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethodWithParams result: ' + result + '<br>';
             });
 
-            services.agent.testMethodWithParamsAndReturnValue ("kostya").then(function (result) {
-                document.getElementsByClassName('paragraph')[0].innerHTML += 'agent.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
+            object.testMethodWithParamsAndReturnValue ("kostya").then(function (result) {
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
             });
+
+            //
+            // Getter-Setter example
+            //
+
+            // Getter as function call
+            object.getInvokable().then(function (result) {
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.getInvokable    result: ' + result + '<br>';
+            });
+
+            // Setter as function call
+            object.setInvokable("Hi 1").then(function (result) {
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.setInvokable result: ' + result + '<br>';
+            });
+
+            (async function() {
+                await (object.invokable = "Hi from JS");
+                let invokable = await object.invokable;
+    
+                // synch access to property
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'invokable result: ' + invokable + '<br>';
+            }());
+
+
         });
 
 </script>
