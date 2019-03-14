@@ -45,7 +45,9 @@
         //after connect
         socket.onopen = function(){
 
-            //calls
+            //
+            // Slots calls
+            //
             jrpc.call("object.slot").then(function (result) {
                 document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slot result: ' + result + '<br>';
             });
@@ -56,6 +58,26 @@
 
             jrpc.call('object.slotWithParamsAndReturnValue', ["kostya"]).then(function (result) {
                 document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slotWithParamsAndReturnValue result: ' + result + '<br>';
+            });
+
+            // Invokable maethods calls
+            jrpc.call('object.invokableSetter', ["I'm setter"]).then(function (result) {
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableSetter result: ' + result + '<br>';
+            
+                // call Getter as function call
+                jrpc.call('object.invokableGetter', []).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.invokableGetter    result: ' + result + '<br>';
+                });
+            });
+
+            // Properties access 
+            jrpc.call('object.setProperty', ["I'm setter"]).then(function (result) {
+                document.getElementsByClassName('paragraph')[0].innerHTML += 'object.setProperty result: ' + result + '<br>';
+            
+                // call Getter as function call
+                jrpc.call('object.getProperty', []).then(function (result) {
+                    document.getElementsByClassName('paragraph')[0].innerHTML += 'object.getProperty    result: ' + result + '<br>';
+                });
             });
         };
 

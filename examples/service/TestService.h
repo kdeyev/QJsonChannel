@@ -15,7 +15,7 @@ public:
 	Q_INVOKABLE QString invokableGetter();
 	Q_INVOKABLE void invokableSetter(QString p);
 
-	public Q_SLOTS:
+public Q_SLOTS:
 	void    slot();
 	void    slotWithParams(const QString& first, bool second, double third);
 	QString slotWithParamsAndReturnValue(const QString& name);
