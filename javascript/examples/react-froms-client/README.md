@@ -1,7 +1,7 @@
-# QJsonChannel UI Forms <img src="https://seeklogo.com/images/R/react-logo-7B3CE81517-seeklogo.com.png" width="24" height="24">
+# RpcWebChannel UI Forms <img src="https://seeklogo.com/images/R/react-logo-7B3CE81517-seeklogo.com.png" width="24" height="24">
 
-This example shows how to generate UI forms for RPC functions exposed by the QJsonChannel server.
-The example utilizes the [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html) format for discovering service list on a specific QJsonChannel server and uses the [React Jon Schema Form](https://github.com/mozilla-services/react-jsonschema-form) for the UI forms generation. A generated UI Form allows specifying parameter values and invokes a server-side method using QJsonChannel.
+This example shows how to generate UI forms for RPC functions exposed by the RpcWebChannel server.
+The example utilizes the [JSON Schema Service Descriptor](https://jsonrpc.org/historical/json-schema-service-descriptor.html) format for discovering service list on a specific RpcWebChannel server and uses the [React Jon Schema Form](https://github.com/mozilla-services/react-jsonschema-form) for the UI forms generation. A generated UI Form allows specifying parameter values and invokes a server-side method using RpcWebChannel.
 
 ## Example running
 For the example running you need to do the regular React stuff:
@@ -16,7 +16,7 @@ npm run build
 
 
 ## How it works
-1. At the first step, QJsonChannel UI Forms send a __init__ request to QJsonChannel server and receives a response in JSON Schema Service Descriptor format. For example:
+1. At the first step, RpcWebChannel UI Forms send a __init__ request to RpcWebChannel server and receives a response in JSON Schema Service Descriptor format. For example:
 ~~~~json
 {
   "object": {
@@ -131,7 +131,7 @@ npm run build
 }
 ~~~~
 
-2. Based on Service Descriptor, QJsonChannel UI Forms generates a list of services.methods available for RPC calls.
+2. Based on Service Descriptor, RpcWebChannel UI Forms generates a list of services.methods available for RPC calls.
 ![Demo](doc/selector.png)
 
 3. Each one of methods (service function) is described using JSON Schema document:
