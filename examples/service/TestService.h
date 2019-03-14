@@ -8,36 +8,28 @@ class TestService : public QObject {
 public:
 	TestService(QObject* parent = 0);
 
-	Q_PROPERTY(int property1 MEMBER property1);
-	Q_PROPERTY(float property2 READ getProperty2);
-	Q_PROPERTY(QString property3 READ getProperty3 WRITE setProperty3);
+	Q_PROPERTY(QString property MEMBER property);
+	Q_PROPERTY(float readOnlyProperty READ getReadOnlyProperty);
+	Q_PROPERTY(int propertyWithGetterSetter READ getPropertyWithGetterSetter WRITE setPropertyWithGetterSetter);
 
-	float getProperty2() {
-		return property2;
-	}
-
-	QString getProperty3() {
-		return property3;
-	}
-
-	void setProperty3(QString p) {
-		property3 = p;
-	}
-
-	Q_INVOKABLE QString getInvokable();
-
-	Q_INVOKABLE void setInvokable(QString p);
+	Q_INVOKABLE QString invokableGetter();
+	Q_INVOKABLE void invokableSetter(QString p);
 
 	public Q_SLOTS:
-	void    testMethod();
-	void    testMethodWithParams(const QString& first, bool second, double third);
-	void    testMethodWithVariantParams(const QString& first, bool second, double third, const QVariant& fourth);
-	QString testMethodWithParamsAndReturnValue(const QString& name);
-	void    testMethodWithDefaultParameter(const QString& first, const QString& second = QString());
+	void    slot();
+	void    slotWithParams(const QString& first, bool second, double third);
+	QString slotWithParamsAndReturnValue(const QString& name);
+
+	void    slotWithVariantParams(const QString& first, bool second, double third, const QVariant& fourth);
+	void    slotWithDefaultParameter(const QString& first, const QString& second = QString());
 
 private:
-	int property1 = 0;
-	float property2 = 0;
-	QString property3;
+	QString property = 0;
+	float readOnlyProperty = 42;
+	int propertyWithGetterSetter = 0;
 	QString invokable = QString("I'm getInvokable");
+
+	float getReadOnlyProperty();
+	int getPropertyWithGetterSetter();
+	void setPropertyWithGetterSetter(int p);
 };

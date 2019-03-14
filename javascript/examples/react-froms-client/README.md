@@ -26,8 +26,8 @@ npm run build
     },
     "jsonrpc": "2.0",
     "methods": {
-      "testMethod": {
-        "description": "testMethod",
+      "slot": {
+        "description": "slot",
         "params": {
           "properties": {},
           "type": "object"
@@ -36,10 +36,10 @@ npm run build
           "description": "return value",
           "type": "undefined"
         },
-        "summary": "testMethod"
+        "summary": "slot"
       },
-      "testMethodWithDefaultParameter": {
-        "description": "testMethodWithDefaultParameter",
+      "slotWithDefaultParameter": {
+        "description": "slotWithDefaultParameter",
         "params": {
           "properties": {
             "first": {
@@ -53,10 +53,10 @@ npm run build
           "description": "return value",
           "type": "undefined"
         },
-        "summary": "testMethodWithDefaultParameter"
+        "summary": "slotWithDefaultParameter"
       },
-      "testMethodWithParams": {
-        "description": "testMethodWithParams",
+      "slotWithParams": {
+        "description": "slotWithParams",
         "params": {
           "properties": {
             "first": {
@@ -78,10 +78,10 @@ npm run build
           "description": "return value",
           "type": "undefined"
         },
-        "summary": "testMethodWithParams"
+        "summary": "slotWithParams"
       },
-      "testMethodWithParamsAndReturnValue": {
-        "description": "testMethodWithParamsAndReturnValue",
+      "slotWithParamsAndReturnValue": {
+        "description": "slotWithParamsAndReturnValue",
         "params": {
           "properties": {
             "name": {
@@ -95,10 +95,10 @@ npm run build
           "description": "return value",
           "type": "string"
         },
-        "summary": "testMethodWithParamsAndReturnValue"
+        "summary": "slotWithParamsAndReturnValue"
       },
-      "testMethodWithVariantParams": {
-        "description": "testMethodWithVariantParams",
+      "slotWithVariantParams": {
+        "description": "slotWithVariantParams",
         "params": {
           "properties": {
             "first": {
@@ -124,7 +124,7 @@ npm run build
           "description": "return value",
           "type": "undefined"
         },
-        "summary": "testMethodWithVariantParams"
+        "summary": "slotWithVariantParams"
       }
     }
   }
@@ -136,8 +136,8 @@ npm run build
 
 3. Each one of methods (service function) is described using JSON Schema document:
 ~~~~
- "testMethodWithParams": {
-        "description": "testMethodWithParams",
+ "slotWithParams": {
+        "description": "slotWithParams",
         "params": {
           "properties": {
             "first": {
@@ -159,7 +159,7 @@ npm run build
           "description": "return value",
           "type": "undefined"
         },
-        "summary": "testMethodWithParams"
+        "summary": "slotWithParams"
       }
 ~~~~
 

@@ -33,16 +33,16 @@
         };
 
         //calls
-        jrpc.call("object.testMethod").then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethod result: ' + result + '<br>';
+        jrpc.call("object.slot").then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slot result: ' + result + '<br>';
         });
 
-        jrpc.call('object.testMethodWithParams', ["one", false, 10]).then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethodWithParams result: ' + result + '<br>';
+        jrpc.call('object.slotWithParams', ["one", false, 10]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slotWithParams result: ' + result + '<br>';
         });
 
-        jrpc.call('object.testMethodWithParamsAndReturnValue', ["kostya"]).then(function (result) {
-            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.testMethodWithParamsAndReturnValue result: ' + result + '<br>';
+        jrpc.call('object.slotWithParamsAndReturnValue', ["kostya"]).then(function (result) {
+            document.getElementsByClassName('paragraph')[0].innerHTML += 'object.slotWithParamsAndReturnValue result: ' + result + '<br>';
         });
 
 </script>
