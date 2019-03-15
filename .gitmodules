@@ -1,9 +1,9 @@
 [submodule "tufao"]
 	path = tufao
 	url = https://github.com/kdeyev/tufao.git
-[submodule "javascript/qjsonchannel/simple-jsonrpc-js"]
-	path = javascript/qjsonchannel/simple-jsonrpc-js
-	url = https://github.com/kdeyev/simple-jsonrpc-js.git
 [submodule "QJsonChannelCore"]
 	path = QJsonChannelCore
 	url = https://github.com/kdeyev/QJsonChannelCore.git
+[submodule "rpcWebChannel"]
+	path = rpcWebChannel
+	url = https://github.com/kdeyev/rpcWebChannel.git

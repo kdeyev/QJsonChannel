@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file alias="index.html">resources/index.html</file>
         <file alias="qwebchannel.js">../../common/resources/qwebchannel.js</file>
-        <file alias="qjsonchannel.js">../../../javascript/qjsonchannel/qjsonchannel.js</file>
-        <file alias="simple-jsonrpc-js.js">../../../javascript/qjsonchannel/simple-jsonrpc-js/simple-jsonrpc-js.js</file>
+        <file alias="rpcWebChannel.js">../../../rpcWebChannel/src/rpcWebChannel.js</file>
+        <file alias="simple-jsonrpc-js.js">../../../rpcWebChannel/src/simple-jsonrpc-js/simple-jsonrpc-js.js</file>
     </qresource>
 </RCC>
